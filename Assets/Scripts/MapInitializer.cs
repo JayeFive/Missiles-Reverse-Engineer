@@ -35,6 +35,7 @@ public class MapInitializer : MonoBehaviour {
             for (tileX = firstX; tileX <= firstY; tileX += tileSize)
             {
                 GameObject newTile = Instantiate(mapTile, new Vector3(tileX, tileY, 0), Quaternion.identity, transform);
+                newTile.transform.Translate(0, 0, 2.0f);
                 AddClouds(newTile);
             }
         }
