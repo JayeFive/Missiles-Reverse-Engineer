@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TouchJoystick : MonoBehaviour {
 
+    public GameObject Airplane;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +14,12 @@ public class TouchJoystick : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
+
+    void RotateAirplane ()
+    {
+
+    }
+
 }
