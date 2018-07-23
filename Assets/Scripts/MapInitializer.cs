@@ -17,7 +17,6 @@ public class MapInitializer : MonoBehaviour {
         int halfNumColumns = (int)Mathf.Floor(squareMapSideSize / 2);
         int firstX;
         int firstY;
-        Debug.Log(halfNumColumns);
 
         firstX = halfNumColumns * -tileSize;
         firstY = halfNumColumns * tileSize;
@@ -35,16 +34,22 @@ public class MapInitializer : MonoBehaviour {
         {
             for (tileX = firstX; tileX <= firstY; tileX += tileSize)
             {
-                Instantiate(mapTile, new Vector3(tileX, tileY, 0), Quaternion.identity, transform);
-                //AddClouds();
+                GameObject newTile = Instantiate(mapTile, new Vector3(tileX, tileY, 0), Quaternion.identity, transform);
+                AddClouds(newTile);
             }
         }
     }
 
-    void AddClouds ()
+    void AddClouds (GameObject newTile)
     {
         int numClouds = (int)Mathf.Floor(Random.Range(1.0f, 3.0f));
-
+        
+        for (int i = 0; i < numClouds; i++)
+        {
+            GameObject newCloud = Instantiate(cloud, newTile.transform);
+            newCloud.transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0);
+            newCloud.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f));
+        }
         
     }
 }
