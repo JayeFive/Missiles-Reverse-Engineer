@@ -19,15 +19,13 @@ public class MapInitializer : MonoBehaviour {
         int firstY;
         Debug.Log(halfNumColumns);
 
+        firstX = halfNumColumns * -tileSize;
+        firstY = halfNumColumns * tileSize;
+
         if ((squareMapSideSize % 2) == 0)
         {
-            firstX = (halfNumColumns * -tileSize) + tileSize / 2;
-            firstY = (halfNumColumns * tileSize) - tileSize / 2;
-        }
-        else
-        {
-            firstX = halfNumColumns * -tileSize;
-            firstY = halfNumColumns * tileSize;
+            firstX += tileSize / 2;
+            firstY -= tileSize / 2;
         }
 
         int tileX;
