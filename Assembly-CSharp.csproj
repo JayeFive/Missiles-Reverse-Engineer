@@ -130,6 +130,7 @@
      <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\ETCJoystick.cs" />
      <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
      <Compile Include="Assets\Scripts\Airplane.cs" />
+     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\MapInitializer.cs" />
      <Compile Include="Assets\Scripts\TouchJoystick.cs" />
      <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
