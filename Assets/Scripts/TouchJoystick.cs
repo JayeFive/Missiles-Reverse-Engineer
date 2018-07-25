@@ -19,10 +19,4 @@ public class TouchJoystick : MonoBehaviour {
         joystickDirection.x = xpos;
         joystickDirection.y = ypos;
     }
-
-    void RotateAirplane ()
-    {
-
-    }
-
 }
