@@ -7,20 +7,16 @@ public class MapInitializer : MonoBehaviour {
     public GameObject mapTile;
     public GameObject cloud;
     public GameObject map;
-    public int squareMapSideSize = 5;
+    public int squareMapSideSize = 3;
 
 	// Use this for initialization
-
-	void Start () {
-
+	void Start ()
+    {
         int tileSize = (int)mapTile.GetComponent<RectTransform>().rect.width;
 
         int halfNumColumns = (int)Mathf.Floor(squareMapSideSize / 2);
-        int firstX;
-        int firstY;
-
-        firstX = halfNumColumns * -tileSize;
-        firstY = halfNumColumns * tileSize;
+        int firstX = halfNumColumns * -tileSize;
+        int firstY = halfNumColumns * tileSize; ;
 
         if ((squareMapSideSize % 2) == 0)
         {
@@ -35,8 +31,7 @@ public class MapInitializer : MonoBehaviour {
         {
             for (tileX = firstX; tileX <= firstY; tileX += tileSize)
             {
-                GameObject newTile = Instantiate(mapTile, new Vector3(tileX, tileY, 0), Quaternion.identity, transform);
-                newTile.transform.Translate(0, 0, 2.0f);
+                GameObject newTile = Instantiate(mapTile, new Vector3(tileX, tileY, 2.0f), Quaternion.identity, transform);
                 AddClouds(newTile);
             }
         }
@@ -46,12 +41,12 @@ public class MapInitializer : MonoBehaviour {
 
     void AddClouds (GameObject newTile)
     {
-        int numClouds = (int)Mathf.Floor(Random.Range(1.0f, 3.0f));
+        int numClouds = (int)Mathf.Floor(Random.Range(1.0f, 3.0f)); // TODO magic numbers
         
         for (int i = 0; i < numClouds; i++)
         {
             GameObject newCloud = Instantiate(cloud, newTile.transform);
-            newCloud.transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0);
+            newCloud.transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0); // TODO magic numbers
             newCloud.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f));
         }
         

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class MapTile : MonoBehaviour {
 
-    GameObject map;
+    MapController mapController;
 
     void Start ()
     {
-        map = GameObject.FindGameObjectWithTag("Map");
+        mapController = FindObjectOfType<MapController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        map.GetComponent<MapController>().ShiftMap();
+        mapController.ShiftMap(gameObject);
     }
 }
