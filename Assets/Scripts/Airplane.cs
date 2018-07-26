@@ -28,7 +28,6 @@ public class Airplane : MonoBehaviour {
             if (Input.GetMouseButton(0))
             {
                 flightDirection = Mathf.Atan2(-joystick.joystickDirection.x, joystick.joystickDirection.y) * Mathf.Rad2Deg;
-                Debug.Log(flightDirection);
                 TurnAirplane(flightDirection);
             }
         }
