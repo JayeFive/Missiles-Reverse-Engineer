@@ -6,7 +6,8 @@ public class MapInitializer : MonoBehaviour {
 
     public GameObject mapTile;
     public GameObject cloud;
-    public int squareMapSideSize = 6;
+    public GameObject map;
+    public int squareMapSideSize = 5;
 
 	// Use this for initialization
 
@@ -39,6 +40,8 @@ public class MapInitializer : MonoBehaviour {
                 AddClouds(newTile);
             }
         }
+
+        map.GetComponent<MapController>().PopulateMapTileArray();
     }
 
     void AddClouds (GameObject newTile)
