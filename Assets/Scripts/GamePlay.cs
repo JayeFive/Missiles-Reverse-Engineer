@@ -15,17 +15,19 @@ public class GamePlay : MonoBehaviour {
         airplane = FindObjectOfType<Airplane>();
         joystick = FindObjectOfType<TouchJoystick>();
 
-        //airplane.StartingTurn();
+        // TODO create coroutine utility class to return bool value from this coroutine
+        // https://answers.unity.com/questions/24640/how-do-i-return-a-value-from-a-coroutine.html
         airplane.StartCoroutine("StartingTurn");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-        if (airplane.gameStarted)
+        if (airplane.startingTurnComplete)
         {
             joystick.GetComponent<ETCJoystick>().visible = true;
         }
-
     }
+
+
 }
