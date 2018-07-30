@@ -51,7 +51,7 @@ public class MapInitializer : MonoBehaviour {
         for (int i = 0; i < numClouds; i++)
         {
             GameObject newCloud = Instantiate(cloud, newTile.transform);
-            newCloud.transform.localPosition = new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-tileSize / 2, tileSize / 2), 0); 
+            newCloud.transform.localPosition = new Vector3(Random.Range(-tileSize / 2, tileSize / 2), Random.Range(-tileSize / 2, tileSize / 2), 0); 
             newCloud.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f));
         }
         
