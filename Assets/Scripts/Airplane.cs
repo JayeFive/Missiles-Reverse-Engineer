@@ -7,7 +7,7 @@ public class Airplane : MonoBehaviour {
     public TouchJoystick joystick;
     public float flightSpeed = 1.0f;
     public float turnSpeed = 10.0f;
-    public bool gameStarted = false;
+    public bool startingTurnComplete = false;
 
     private float flightDirection;
     private Vector3 rotation;
@@ -23,7 +23,7 @@ public class Airplane : MonoBehaviour {
     {
         transform.position += transform.up * flightSpeed * Time.deltaTime;
 
-        if (gameStarted)
+        if (startingTurnComplete)
         {
             if (Input.GetMouseButton(0))
             {
@@ -41,7 +41,7 @@ public class Airplane : MonoBehaviour {
             yield return null;
         }
 
-        gameStarted = true;
+        startingTurnComplete = true;
     }
 
     void TurnAirplane (float flightDirection)
