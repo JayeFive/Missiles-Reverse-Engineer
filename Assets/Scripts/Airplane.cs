@@ -6,11 +6,10 @@ public class Airplane : MonoBehaviour {
 
     public TouchJoystick joystick;
     public float flightSpeed = 1.0f;
-    public float turnSpeed = 10.0f;
+    public float turnSpeed = 90.0f;
     public bool startingTurnComplete = false;
 
     private float flightDirection;
-    private Vector3 rotation;
 
 	// Use this for initialization
 	void Start ()
@@ -21,13 +20,13 @@ public class Airplane : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position += transform.up * flightSpeed * Time.deltaTime;
+        transform.position += transform.right * flightSpeed * Time.deltaTime;
 
         if (startingTurnComplete)
         {
             if (Input.GetMouseButton(0))
             {
-                flightDirection = Mathf.Atan2(-joystick.joystickDirection.x, joystick.joystickDirection.y) * Mathf.Rad2Deg;
+                flightDirection = Mathf.Atan2(joystick.joystickDirection.y, joystick.joystickDirection.x) * Mathf.Rad2Deg;
                 TurnAirplane(flightDirection);
             }
         }
@@ -35,7 +34,7 @@ public class Airplane : MonoBehaviour {
 
     public IEnumerator StartingTurn ()
     {
-        for (float flightDirection = 0; flightDirection <= 180; flightDirection += Time.deltaTime * turnSpeed)
+        for (float flightDirection = 90; flightDirection <= 270; flightDirection += Time.deltaTime * turnSpeed)
         {
             TurnAirplane(flightDirection);
             yield return null;
@@ -46,6 +45,9 @@ public class Airplane : MonoBehaviour {
 
     void TurnAirplane (float flightDirection)
     {
-        transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.Euler(0, 0, flightDirection), Time.deltaTime * turnSpeed);
+        Quaternion qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
+        
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
+
     }
 }
