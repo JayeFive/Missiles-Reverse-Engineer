@@ -24,16 +24,8 @@ public class MissleSpawner : MonoBehaviour {
     {
         Vector3 spawnLocation = airplane.transform.position + (Vector3.up * 12);
         Vector2 vectorToAirplane = airplane.transform.position - spawnLocation;
-
-        Debug.Log("vectorToAirplane: " + vectorToAirplane);
-
         float angle = Mathf.Atan2(vectorToAirplane.y, vectorToAirplane.x) * Mathf.Rad2Deg;
-
-
-        Debug.Log("starting rotation angle: " + angle);
-
         Quaternion startingRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
 
         GameObject newMissle = Instantiate(longMissle, spawnLocation, startingRotation);
     }

@@ -40,8 +40,6 @@ public class LongMissle : MonoBehaviour {
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
 
-            
-
             rb2D.AddForce(transform.right * flightSpeed);
         }
         else
