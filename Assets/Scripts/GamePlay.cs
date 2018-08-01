@@ -6,7 +6,7 @@ public class GamePlay : MonoBehaviour {
 
     private Airplane airplane;
     public TouchJoystick joystick;
-    bool gameStarted = false;
+    //bool gameStarted = false;
 
 
 	// Use this for initialization
@@ -23,6 +23,7 @@ public class GamePlay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+        // TODO move to airplane script
         if (airplane.startingTurnComplete)
         {
             joystick.GetComponent<ETCJoystick>().visible = true;
