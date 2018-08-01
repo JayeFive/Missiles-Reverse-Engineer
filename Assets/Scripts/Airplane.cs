@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class Airplane : MonoBehaviour {
 
+    [SerializeField] float flightSpeed;
+    [SerializeField] float turnSpeed;
     public TouchJoystick joystick;
-    public float flightSpeed = 1.0f;
-    public float turnSpeed = 90.0f;
     public bool startingTurnComplete = false;
 
     private float flightDirection;
+    private Rigidbody2D rb2D;
 
 	// Use this for initialization
 	void Start ()
     {
+        rb2D = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<TouchJoystick>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        transform.position += transform.right * flightSpeed * Time.deltaTime;
+        //transform.position += transform.right * flightSpeed * Time.deltaTime;
+        rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
+        rb2D.AddForce(transform.right * flightSpeed);
 
         if (startingTurnComplete)
         {
@@ -46,8 +50,6 @@ public class Airplane : MonoBehaviour {
     void TurnAirplane (float flightDirection)
     {
         Quaternion qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
-        
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
-
     }
 }
