@@ -11,8 +11,8 @@ public class MapInitializer : MonoBehaviour {
 
     private int tileSize;
 
-    const int numCloudsFloor = 3;
-    const int numCloudsCeiling = 7;
+    const int numCloudsFloor = 5;
+    const int numCloudsCeiling = 10;
 
 	// Use this for initialization
 	void Start ()
