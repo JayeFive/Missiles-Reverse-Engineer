@@ -14,7 +14,6 @@ public class LongMissle : MonoBehaviour {
     void Start()
     {
         missleController = GetComponent<MissleController>();
-        StartCoroutine(missleController.MissleLifeSpan());
 
         missleController.flightSpeed = flightSpeed;
         missleController.turnSpeed = turnSpeed;

@@ -22,6 +22,8 @@ public class MissleController : MonoBehaviour {
     {
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
+
+        StartCoroutine(MissleLifeSpan());
     }
 	
 	// Update is called once per frame
@@ -47,17 +49,17 @@ public class MissleController : MonoBehaviour {
         TurnAndPush();
     }
 
-    private void TurnAndPush()
-    {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
-        rb2D.AddForce(transform.right * flightSpeed);
-    }
-
     private void DetermineDirection()
     {
         vectorToAirplane = airplane.transform.position - transform.position;
         flightDirection = Mathf.Atan2(vectorToAirplane.y, vectorToAirplane.x) * Mathf.Rad2Deg;
         qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
+    }
+
+    private void TurnAndPush()
+    {
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
+        rb2D.AddForce(transform.right * flightSpeed);
     }
 
     public IEnumerator MissleLifeSpan()
