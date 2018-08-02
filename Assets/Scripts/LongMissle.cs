@@ -13,11 +13,11 @@ public class LongMissle : MonoBehaviour {
     void Start()
     {
         missleController = GetComponent<MissleController>();
-        SetMissleProperties();
+        SetMissleParams();
         missleController.missleParamsLoaded = true;
     }
 
-    private void SetMissleProperties()
+    private void SetMissleParams()
     {
         missleController.flightSpeed = flightSpeed;
         missleController.turnSpeed = turnSpeed;
