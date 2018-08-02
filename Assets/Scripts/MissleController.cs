@@ -7,14 +7,15 @@ public class MissleController : MonoBehaviour {
     private Airplane airplane;
     private Rigidbody2D rb2D;
 
-    public float flightSpeed;
-    public float turnSpeed;
-    public float lifeSpan;
+    [HideInInspector] public float flightSpeed;
+    [HideInInspector] public float turnSpeed;
+    [HideInInspector] public float lifeSpan;
 
     private Vector2 vectorToAirplane;
     private float flightDirection;
     private Quaternion qt;
 
+    public bool missleParamsLoaded = false;
     private bool isActive = true;
 
     // Use this for initialization
@@ -23,7 +24,7 @@ public class MissleController : MonoBehaviour {
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
 
-        StartCoroutine(MissleLifeSpan());
+        StartCoroutine(StartMissle());
     }
 	
 	// Update is called once per frame
@@ -62,19 +63,25 @@ public class MissleController : MonoBehaviour {
         rb2D.AddForce(transform.right * flightSpeed);
     }
 
-    public IEnumerator MissleLifeSpan()
+    private IEnumerator StartMissle ()
+    {
+        yield return new WaitUntil(() => missleParamsLoaded == true);
+
+        StartCoroutine(RunMissleLifeSpan());
+    }
+
+    private IEnumerator RunMissleLifeSpan()
     {
         yield return new WaitForSeconds(lifeSpan);
 
         isActive = false;
     }
 
-    public IEnumerator MissleFade()
+    private IEnumerator MissleFade()
     {
         for (float scale = 1; scale > 0; scale -= 0.015f)
         {
             transform.localScale = new Vector3(scale, scale, 0);
-
             yield return null;
         }
 

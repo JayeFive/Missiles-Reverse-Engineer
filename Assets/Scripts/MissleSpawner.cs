@@ -5,23 +5,17 @@ using UnityEngine;
 
 public class MissleSpawner : MonoBehaviour {
 
+    [SerializeField] float spawnDistance;
+    [SerializeField] Vector3 topSpawnLocation;
+
     public Airplane airplane;
     public GameObject longMissle;
 
-    [SerializeField] float spawnDistance;
-
-    Vector3 topSpawnLocation;
 
     void Start ()
     {
         airplane = FindObjectOfType<Airplane>();
         Invoke("SpawnMissle", 2);
-        GenerateSpawnLocations();
-    }
-
-    private void GenerateSpawnLocations()
-    {
-        topSpawnLocation = (Vector3.up * spawnDistance);
     }
 
     void Update ()

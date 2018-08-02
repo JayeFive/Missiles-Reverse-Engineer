@@ -10,11 +10,11 @@ public class LongMissle : MonoBehaviour {
 
     private MissleController missleController;
 
-    // Use this for initialization
     void Start()
     {
         missleController = GetComponent<MissleController>();
         SetMissleProperties();
+        missleController.missleParamsLoaded = true;
     }
 
     private void SetMissleProperties()
