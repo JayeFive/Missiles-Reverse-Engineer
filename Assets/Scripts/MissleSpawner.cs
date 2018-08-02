@@ -17,6 +17,7 @@ public class MissleSpawner : MonoBehaviour {
     {
         mediumMissleTriple = GetComponent<MediumMissleTriple>();
 
-        StartCoroutine(mediumMissleTriple.StartLaunchController());
+        StartCoroutine(mediumMissleTriple.StartLaunchController(2)); // ~20 second flight time
+
     }
 }

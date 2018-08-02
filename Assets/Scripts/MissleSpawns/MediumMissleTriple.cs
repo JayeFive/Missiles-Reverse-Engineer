@@ -12,7 +12,6 @@ public class MediumMissleTriple : MonoBehaviour {
     [SerializeField] Vector2 spawnOffset;
     [SerializeField] float horizontalRangeFloor;
     [SerializeField] float horizontalRangeCeiling;
-    [SerializeField] float timeToLaunch;
     [SerializeField] float timeBetweenFloor;
     [SerializeField] float timeBetweenCeiling;
 
@@ -23,7 +22,7 @@ public class MediumMissleTriple : MonoBehaviour {
         airplane = FindObjectOfType<Airplane>();
     }
 
-    public IEnumerator StartLaunchController ()
+    public IEnumerator StartLaunchController (float timeToLaunch)
     {
         yield return new WaitForSeconds(timeToLaunch);
 
