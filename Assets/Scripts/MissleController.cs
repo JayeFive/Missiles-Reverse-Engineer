@@ -10,13 +10,17 @@ public class MissleController : MonoBehaviour {
     [HideInInspector] public float flightSpeed;
     [HideInInspector] public float turnSpeed;
     [HideInInspector] public float lifeSpan;
+    [HideInInspector] public bool missleParamsLoaded = false;
 
     private Vector2 vectorToAirplane;
     private float flightDirection;
     private Quaternion qt;
 
-    public bool missleParamsLoaded = false;
     private bool isActive = true;
+
+    [SerializeField] float fadeSpeed = 0.015f;
+    [SerializeField] float fadeFlightSpeedModifier;
+    private float fadeFlightSpeed;
 
     // Use this for initialization
     void Start ()
@@ -25,6 +29,8 @@ public class MissleController : MonoBehaviour {
         rb2D = GetComponent<Rigidbody2D>();
 
         StartCoroutine(StartMissle());
+
+        fadeFlightSpeed = flightSpeed * fadeFlightSpeedModifier;
     }
 	
 	// Update is called once per frame
@@ -39,7 +45,6 @@ public class MissleController : MonoBehaviour {
         else
         {
             GetComponent<CapsuleCollider2D>().enabled = false;
-
             StartCoroutine(MissleFade());
         }
     }
@@ -79,7 +84,9 @@ public class MissleController : MonoBehaviour {
 
     private IEnumerator MissleFade()
     {
-        for (float scale = 1; scale > 0; scale -= 0.015f)
+        flightSpeed = fadeFlightSpeed;
+
+        for (float scale = 1; scale > 0; scale -= fadeSpeed)
         {
             transform.localScale = new Vector3(scale, scale, 0);
             yield return null;
