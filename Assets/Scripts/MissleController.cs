@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MissleController : MonoBehaviour {
 
+    private GamePlay gamePlay;
     private Airplane airplane;
     private Rigidbody2D rb2D;
+    private AnimationController animationController;
 
     [HideInInspector] public float flightSpeed;
     [HideInInspector] public float turnSpeed;
@@ -24,8 +26,10 @@ public class MissleController : MonoBehaviour {
 
     void Start ()
     {
+        gamePlay = FindObjectOfType<GamePlay>();
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
+        animationController = FindObjectOfType<AnimationController>();
 
         StartCoroutine(StartMissle());
 
@@ -98,14 +102,16 @@ public class MissleController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Missle")
         {
-            // TODO add missle collision animation
-
-            Debug.Log("Missles hit!");
+            animationController.MissleToMissleExplosion();
             Object.Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Airplane")
         {
-            Debug.Log("Collided with airplane");
+            animationController.MissleToAirplaneExplosion();
+
+            // TODO add points to gamePlay total points
+
+            gamePlay.ShowResetUI();
         }
     }
 
