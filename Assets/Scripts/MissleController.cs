@@ -22,7 +22,6 @@ public class MissleController : MonoBehaviour {
     [SerializeField] float fadeFlightSpeedModifier;
     private float fadeFlightSpeed;
 
-    // Use this for initialization
     void Start ()
     {
         airplane = FindObjectOfType<Airplane>();
@@ -33,7 +32,6 @@ public class MissleController : MonoBehaviour {
         fadeFlightSpeed = flightSpeed * fadeFlightSpeedModifier;
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
         rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
@@ -52,7 +50,7 @@ public class MissleController : MonoBehaviour {
     private void MoveMissle()
     {
         DetermineDirection();
-        TurnAndPush();
+        TurnAndForce();
     }
 
     private void DetermineDirection()
@@ -62,7 +60,7 @@ public class MissleController : MonoBehaviour {
         qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
     }
 
-    private void TurnAndPush()
+    private void TurnAndForce()
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
         rb2D.AddForce(transform.right * flightSpeed);
@@ -94,4 +92,22 @@ public class MissleController : MonoBehaviour {
 
         Destroy(gameObject);
     }
+
+    //Collisions
+    private void OnTriggerEnter2D (Collider2D other)
+    {
+        if (other.gameObject.tag == "Missle")
+        {
+            // TODO add missle collision animation
+
+            Debug.Log("Missles hit!");
+            Object.Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Airplane")
+        {
+            Debug.Log("Collided with airplane");
+        }
+    }
+
+
 }

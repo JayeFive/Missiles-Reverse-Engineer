@@ -52,4 +52,10 @@ public class Airplane : MonoBehaviour {
         Quaternion qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
     }
+
+    //Collisions
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+    }
 }
