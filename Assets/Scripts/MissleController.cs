@@ -89,6 +89,7 @@ public class MissleController : MonoBehaviour {
 
     private IEnumerator MissleFade()
     {
+        transform.DetachChildren();
         flightSpeed = fadeFlightSpeed;
 
         for (float scale = 1; scale > 0; scale -= fadeSpeed)
