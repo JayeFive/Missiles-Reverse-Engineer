@@ -131,6 +131,8 @@
      <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
      <Compile Include="Assets\Scripts\Airplane.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\circle.cs" />
+     <Compile Include="Assets\Scripts\ExplosionController.cs" />
      <Compile Include="Assets\Scripts\GamePlay.cs" />
      <Compile Include="Assets\Scripts\LongMissle.cs" />
      <Compile Include="Assets\Scripts\MapController.cs" />
@@ -140,6 +142,7 @@
      <Compile Include="Assets\Scripts\MissleController.cs" />
      <Compile Include="Assets\Scripts\MissleSpawner.cs" />
      <Compile Include="Assets\Scripts\MissleSpawns\MediumMissleTriple.cs" />
+     <Compile Include="Assets\Scripts\MissleSpawns\SingleLongMissle.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\TokenSpawner.cs" />
      <Compile Include="Assets\Scripts\TouchJoystick.cs" />

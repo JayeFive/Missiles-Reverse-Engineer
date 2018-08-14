@@ -6,8 +6,6 @@ public class GamePlay : MonoBehaviour {
 
     private Airplane airplane;
     public TouchJoystick joystick;
-    //bool gameStarted = false;
-
 
 	// Use this for initialization
 	void Start ()
@@ -18,7 +16,7 @@ public class GamePlay : MonoBehaviour {
         // TODO create coroutine utility class to return bool value from this coroutine
         // https://answers.unity.com/questions/24640/how-do-i-return-a-value-from-a-coroutine.html
         airplane.StartCoroutine("StartingTurn");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,5 +28,8 @@ public class GamePlay : MonoBehaviour {
         }
     }
 
-
+    public void ShowResetUI ()
+    {
+        // TODO Show Reset UI Screen
+    }
 }
