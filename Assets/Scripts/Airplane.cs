@@ -22,7 +22,6 @@ public class Airplane : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //transform.position += transform.right * flightSpeed * Time.deltaTime;
         rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
         rb2D.AddForce(transform.right * flightSpeed);
 
