@@ -108,7 +108,8 @@ public class MissleController : MonoBehaviour {
             smokeTrail.transform.parent = null;
             GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
             explosion.GetComponent<ExplosionController>().MissleToMissle();
-            Object.Destroy(gameObject);
+            transform.DetachChildren();
+            Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Airplane")
         {
