@@ -6,7 +6,7 @@ public class MapTile : MonoBehaviour {
 
     MapController mapController;
 
-    void Start ()
+    void Awake ()
     {
         mapController = FindObjectOfType<MapController>();
     }
