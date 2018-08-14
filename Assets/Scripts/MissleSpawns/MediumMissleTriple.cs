@@ -45,7 +45,6 @@ public class MediumMissleTriple : MonoBehaviour {
         Quaternion startingRotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         GameObject newMissle = Instantiate(mediumMissle, spawnLocation, startingRotation);
-        Debug.Log("Missle spawned");
     }
 
     private Vector3 RandomizeHorizontal (Vector3 offset)
