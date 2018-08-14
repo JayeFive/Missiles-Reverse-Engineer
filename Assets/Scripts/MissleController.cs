@@ -7,7 +7,8 @@ public class MissleController : MonoBehaviour {
     private GamePlay gamePlay;
     private Airplane airplane;
     private Rigidbody2D rb2D;
-    private AnimationController animationController;
+    private GameObject explosionController;
+    private GameObject smokeTrail;
 
     [HideInInspector] public float flightSpeed;
     [HideInInspector] public float turnSpeed;
@@ -21,19 +22,21 @@ public class MissleController : MonoBehaviour {
     private bool isActive = true;
 
     [SerializeField] float fadeSpeed = 0.015f;
-    [SerializeField] float fadeFlightSpeedModifier;
+    [SerializeField] float fadeSpeedModifier;
     private float fadeFlightSpeed;
 
     void Start ()
     {
         gamePlay = FindObjectOfType<GamePlay>();
         airplane = FindObjectOfType<Airplane>();
+        smokeTrail = (GameObject)Resources.Load("Prefabs/smokeTrail");
         rb2D = GetComponent<Rigidbody2D>();
-        animationController = FindObjectOfType<AnimationController>();
+        explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
 
+        Instantiate(smokeTrail, transform);
         StartCoroutine(StartMissle());
 
-        fadeFlightSpeed = flightSpeed * fadeFlightSpeedModifier;
+        fadeFlightSpeed = flightSpeed * fadeSpeedModifier;
     }
 	
 	void Update ()
@@ -102,12 +105,14 @@ public class MissleController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Missle")
         {
-            animationController.MissleToMissleExplosion();
+            smokeTrail.transform.parent = null;
+            GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
+            explosion.GetComponent<ExplosionController>().MissleToMissle();
             Object.Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Airplane")
         {
-            animationController.MissleToAirplaneExplosion();
+            //explosionController.MissleToAirplane();
 
             // TODO add points to gamePlay total points
 
