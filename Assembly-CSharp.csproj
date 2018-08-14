@@ -143,6 +143,7 @@
      <Compile Include="Assets\Scripts\MissleSpawner.cs" />
      <Compile Include="Assets\Scripts\MissleSpawns\MediumMissleTriple.cs" />
      <Compile Include="Assets\Scripts\MissleSpawns\SingleLongMissle.cs" />
+     <Compile Include="Assets\Scripts\smokeTrail.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\TokenSpawner.cs" />
      <Compile Include="Assets\Scripts\TouchJoystick.cs" />
