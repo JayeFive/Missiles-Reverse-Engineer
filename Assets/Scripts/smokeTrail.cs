@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class smokeTrail : MonoBehaviour {
 
+    private ParticleSystem ps;
+
+    void Start ()
+    {
+        ps = GetComponent<ParticleSystem>();
+    }
+
 	void Update ()
     {
 	    if (transform.parent == null)
@@ -14,7 +21,7 @@ public class smokeTrail : MonoBehaviour {
 
     private void CheckForEnd ()
     {
-        if (gameObject.GetComponent<ParticleSystem>().particleCount == 0)
+        if (ps.particleCount == 0)
         {
             Destroy(gameObject);
         }
