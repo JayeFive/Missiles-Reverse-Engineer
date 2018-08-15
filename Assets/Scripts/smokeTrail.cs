@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class smokeTrail : MonoBehaviour {
 
-    private ParticleSystem ps;
+    [SerializeField] float sputterCurveMax;
+
+    private ParticleSystem smokeParticles;
+    private ParticleSystem.EmissionModule emissionModule; 
 
     void Start ()
     {
-        ps = GetComponent<ParticleSystem>();
+        smokeParticles = GetComponent<ParticleSystem>();
+        emissionModule = smokeParticles.emission;
     }
 
 	void Update ()
@@ -19,9 +23,14 @@ public class smokeTrail : MonoBehaviour {
         }	
 	}
 
+    public void SputterTrail ()
+    {
+        emissionModule.rateOverDistance = new ParticleSystem.MinMaxCurve(0.0f, sputterCurveMax);
+    }
+
     private void CheckForEnd ()
     {
-        if (ps.particleCount == 0)
+        if (smokeParticles.particleCount == 0)
         {
             Destroy(gameObject);
         }

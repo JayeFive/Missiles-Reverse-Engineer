@@ -23,6 +23,7 @@ public class MissleController : MonoBehaviour {
 
     [SerializeField] float fadeSpeed = 0.015f;
     [SerializeField] float fadeSpeedModifier;
+    [SerializeField] float sputterTime;
     private float fadeFlightSpeed;
 
     void Start ()
@@ -46,11 +47,6 @@ public class MissleController : MonoBehaviour {
         if (isActive)
         {
             MoveMissle();
-        }
-        else
-        {
-            GetComponent<CapsuleCollider2D>().enabled = false;
-            StartCoroutine(MissleFade());
         }
     }
 
@@ -77,18 +73,38 @@ public class MissleController : MonoBehaviour {
     {
         yield return new WaitUntil(() => missleParamsLoaded == true);
 
-        StartCoroutine(RunMissleLifeSpan());
+        StartCoroutine(RunMissleToSputter());
     }
 
-    private IEnumerator RunMissleLifeSpan()
+    private IEnumerator RunMissleToSputter()
     {
-        yield return new WaitForSeconds(lifeSpan);
+        yield return new WaitForSeconds(lifeSpan - sputterTime);
 
-        isActive = false;
+        StartCoroutine(SputterOut());
+    }
+
+    private IEnumerator SputterOut ()
+    {
+        var smokeTrail = transform.Find("smokeTrail(Clone)");
+
+        if (smokeTrail != null)
+        {
+            smokeTrail.GetComponent<smokeTrail>().SputterTrail();
+        }
+        else
+        {
+            Debug.Log("Smoke trail not found!");
+        }
+
+        yield return new WaitForSeconds(sputterTime);
+
+        StartCoroutine(MissleFade());
     }
 
     private IEnumerator MissleFade()
     {
+        isActive = false;
+
         transform.DetachChildren();
         flightSpeed = fadeFlightSpeed;
 
