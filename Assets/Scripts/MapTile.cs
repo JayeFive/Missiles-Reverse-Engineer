@@ -13,6 +13,9 @@ public class MapTile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        mapController.ShiftMap(gameObject);
+        if (other.tag == "Airplane")
+        {
+            mapController.ShiftMap(gameObject);
+        }
     }
 }
