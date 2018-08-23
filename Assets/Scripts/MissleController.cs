@@ -15,10 +15,6 @@ public class MissleController : MonoBehaviour {
     [HideInInspector] public float lifeSpan;
     [HideInInspector] public bool missleParamsLoaded = false;
 
-    private Vector2 vectorToAirplane;
-    private float flightDirection;
-    private Quaternion qt;
-
     private bool isActive = true;
 
     [SerializeField] float fadeSpeed = 0.015f;
@@ -35,41 +31,27 @@ public class MissleController : MonoBehaviour {
         explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
 
         Instantiate(smokeTrail, transform);
-        StartCoroutine(StartMissle());
+        StartCoroutine(StartMissile());
 
         fadeFlightSpeed = flightSpeed * fadeSpeedModifier;
     }
 	
-	void Update ()
+	void FixedUpdate ()
     {
-        rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
-
         if (isActive)
         {
-            MoveMissle();
+            Vector2 direction = ((Vector2)airplane.transform.position - rb2D.position).normalized;
+            float rotateAmount = Vector3.Cross(direction, transform.right).z;
+            rb2D.angularVelocity = (-turnSpeed * rotateAmount); 
+            rb2D.velocity = transform.right * flightSpeed;
+        }
+        else
+        {
+            rb2D.angularVelocity = 0.0f;
         }
     }
 
-    private void MoveMissle()
-    {
-        DetermineDirection();
-        TurnAndForce();
-    }
-
-    private void DetermineDirection()
-    {
-        vectorToAirplane = airplane.transform.position - transform.position;
-        flightDirection = Mathf.Atan2(vectorToAirplane.y, vectorToAirplane.x) * Mathf.Rad2Deg;
-        qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
-    }
-
-    private void TurnAndForce()
-    {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
-        rb2D.AddForce(transform.right * flightSpeed);
-    }
-
-    private IEnumerator StartMissle ()
+    private IEnumerator StartMissile ()
     {
         yield return new WaitUntil(() => missleParamsLoaded == true);
 
