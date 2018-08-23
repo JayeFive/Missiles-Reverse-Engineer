@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MediumMissleTriple : MonoBehaviour {
 
-    const int numMissles = 3;
+    [SerializeField] int numMissles = 3;
 
     private Airplane airplane;
     public GameObject mediumMissle;
