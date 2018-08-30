@@ -162,8 +162,13 @@ public partial class OffscreenIndicator : MonoBehaviour {
         if (Mathf.Abs(distToObj) > screenAxisLimit)
         {
             float normalized = distToObj / Mathf.Abs(distToObj);
-
             adjacent = screenAxisLimit + (airplaneAxisOffset * normalized);
+
+            EnableIndicatorSprite(true);
+        }
+        else
+        {
+            EnableIndicatorSprite(false);
         }
     }
 
@@ -172,4 +177,12 @@ public partial class OffscreenIndicator : MonoBehaviour {
         theta *= Mathf.Deg2Rad;
         hypotenuse = adjacent / Mathf.Cos(theta);
     }
+
+
+    // Visibility methods
+    private void EnableIndicatorSprite (bool show)
+    {
+        indicator.GetComponent<SpriteRenderer>().enabled = show;
+    }
 }
+
