@@ -4,9 +4,9 @@ using UnityEngine;
 
 public partial class OffscreenIndicator : MonoBehaviour {
 
-    private Airplane airplane;
     [SerializeField] GameObject indicatorSprite;
-    GameObject indicator;
+    private Airplane airplane;
+    private GameObject indicator;
 
     // Camera fields
     private Vector2 screenLimit;
@@ -41,14 +41,8 @@ public partial class OffscreenIndicator : MonoBehaviour {
         toObj = transform.position - airplane.transform.position;
 
         SetAxisHorizontal();
-
-        FindTheta();
-        SetAxis();
-        FindAdjacent();
-        FindDistToObj();
-        ClampAdjacent();
-        FindHypotenuse();
-
+        PerformTrig();
+        
         indicator.transform.position = (Vector2)(airplane.transform.position) + (toObj.normalized * hypotenuse);
     }
 
@@ -80,7 +74,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
         return new Vector2(x, y);
     }
 
-    public float FindAngleToCorner ()
+    private float FindAngleToCorner ()
     {
         return Vector2.Angle(CreateVectorToCorner(), transform.right);
     }
@@ -100,7 +94,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
 
     // Trig methods
-    public void SetAxisHorizontal ()
+    private void SetAxisHorizontal ()
     {
         axis = transform.right;
         pos = transform.position.x;
@@ -108,10 +102,9 @@ public partial class OffscreenIndicator : MonoBehaviour {
         cameraPos = Camera.main.transform.position.x;
         airplaneAxisOffset = airplaneOffset.x;
         screenAxisLimit = screenLimit.x;
-
     }
 
-    public void SetAxisVertical ()
+    private void SetAxisVertical ()
     {
         axis = transform.up;
         pos = transform.position.y;
@@ -121,12 +114,22 @@ public partial class OffscreenIndicator : MonoBehaviour {
         screenAxisLimit = screenLimit.y;
     }
 
+    private void PerformTrig ()
+    {
+        FindTheta();
+        SetAxis();
+        FindAdjacent();
+        FindDistToObj();
+        ClampAdjacent();
+        FindHypotenuse();
+    }
+
     private void FindDistToObj ()
     {
         distToObj = pos - cameraPos;
     }
 
-    public void FindTheta()
+    private void FindTheta()
     {
         theta = Vector2.Angle(toObj, axis);
 
@@ -136,7 +139,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
         }
     }
 
-    public void SetAxis()
+    private void SetAxis()
     {
         if (theta < FindAngleToCorner())
         {
@@ -149,12 +152,12 @@ public partial class OffscreenIndicator : MonoBehaviour {
         }
     }
 
-    public void FindAdjacent()
+    private void FindAdjacent()
     {
         adjacent = Mathf.Abs(pos - airplanePos);
     }
 
-    public void ClampAdjacent()
+    private void ClampAdjacent()
     {
         if (Mathf.Abs(distToObj) > screenAxisLimit)
         {
@@ -164,7 +167,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
         }
     }
 
-    public void FindHypotenuse()
+    private void FindHypotenuse()
     {
         theta *= Mathf.Deg2Rad;
         hypotenuse = adjacent / Mathf.Cos(theta);
