@@ -37,35 +37,8 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
-
-        //float a = Mathf.Abs(transform.position.x - airplane.transform.position.x);
-        //if (theta < FindAngleToCorner())
-        //{
-        //    a = SetMaxAdjacentLength(a);
-        //}
-        //else
-        //{
-        //    a = Mathf.Abs(transform.position.y - airplane.transform.position.y);
-        //    theta = FindTheta(toObj, transform.up);
-
-        //    float bonusToCameraDistance = transform.position.y - Camera.main.transform.position.y;
-
-        //    if (Mathf.Abs(bonusToCameraDistance) > screenLimit.y)
-        //    {
-        //        float normalized = bonusToCameraDistance / Mathf.Abs(bonusToCameraDistance);
-
-        //        a = screenLimit.y + (airplaneOffset.y * normalized);
-        //    }
-        //}
-
-    }
-
-    void FixedUpdate ()
-    {
         isAboveAirplane = IsAbove();
         toObj = transform.position - airplane.transform.position;
-        airplaneOffset = DetermineAirplaneOffset();
 
         SetAxisHorizontal();
 
@@ -77,6 +50,11 @@ public partial class OffscreenIndicator : MonoBehaviour {
         FindHypotenuse();
 
         indicator.transform.position = (Vector2)(airplane.transform.position) + (toObj.normalized * hypotenuse);
+    }
+
+    void FixedUpdate ()
+    {
+        airplaneOffset = DetermineAirplaneOffset();
     }
 
     private Vector2 DetermineScreenLimits ()
@@ -187,7 +165,5 @@ public partial class OffscreenIndicator : MonoBehaviour {
     {
         theta *= Mathf.Deg2Rad;
         hypotenuse = adjacent / Mathf.Cos(theta);
-        Debug.Log("hypotenuse = " + hypotenuse);
-
     }
 }
