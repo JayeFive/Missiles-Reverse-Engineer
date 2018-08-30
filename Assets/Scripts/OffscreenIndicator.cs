@@ -31,7 +31,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
     void Start()
     {
         airplane    = FindObjectOfType<Airplane>();
-        indicator   = Instantiate(indicatorSprite, Camera.main.transform.position, Quaternion.identity);
+        indicator   = Instantiate(indicatorSprite, transform.position, Quaternion.identity);
         screenLimit = DetermineScreenLimits();
     }   
 
