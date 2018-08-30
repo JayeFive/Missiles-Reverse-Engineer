@@ -8,25 +8,26 @@ public partial class OffscreenIndicator : MonoBehaviour {
     [SerializeField] GameObject indicatorSprite;
     GameObject indicator;
 
+    // Camera fields
     private Vector2 screenLimit;
     private Vector2 airplaneOffset;
     private bool isAboveAirplane;
+    private float cameraPos;
+    private float airplaneAxisOffset;
+    private float screenAxisLimit;
+    private float distToObj;
 
-    [HideInInspector] public float cameraPos;
-    [HideInInspector] public float airplaneAxisOffset;
-    [HideInInspector] public float screenAxisLimit;
-    [HideInInspector] public float distToObj;
-
+    //Trig fields
     private Vector2 toObj;
     private Vector2 axis;
     private float adjacent;
     private float hypotenuse;
     private float theta;
-
     private float pos;
     private float airplanePos;
 
-    // Use this for initialization
+
+    // Monobehaviors
     void Start()
     {
         airplane    = FindObjectOfType<Airplane>();
@@ -34,7 +35,6 @@ public partial class OffscreenIndicator : MonoBehaviour {
         screenLimit = DetermineScreenLimits();
     }   
 
-    // Update is called once per frame
     void Update()
     {
         isAboveAirplane = IsAbove();
@@ -57,6 +57,8 @@ public partial class OffscreenIndicator : MonoBehaviour {
         airplaneOffset = DetermineAirplaneOffset();
     }
 
+
+    // Camera methods
     private Vector2 DetermineScreenLimits ()
     {
         float x = (Camera.main.orthographicSize * Screen.width / Screen.height) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x / 2);
@@ -96,6 +98,8 @@ public partial class OffscreenIndicator : MonoBehaviour {
         return new Vector2(x, y);
     }
 
+
+    // Trig methods
     public void SetAxisHorizontal ()
     {
         axis = transform.right;
@@ -130,7 +134,6 @@ public partial class OffscreenIndicator : MonoBehaviour {
         {
             theta = 180 - theta;
         }
-
     }
 
     public void SetAxis()
