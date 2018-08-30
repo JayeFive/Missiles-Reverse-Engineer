@@ -124,11 +124,6 @@ public partial class OffscreenIndicator : MonoBehaviour {
         FindHypotenuse();
     }
 
-    private void FindDistToObj ()
-    {
-        distToObj = pos - cameraPos;
-    }
-
     private void FindTheta()
     {
         theta = Vector2.Angle(toObj, axis);
@@ -155,6 +150,11 @@ public partial class OffscreenIndicator : MonoBehaviour {
     private void FindAdjacent()
     {
         adjacent = Mathf.Abs(pos - airplanePos);
+    }
+
+    private void FindDistToObj ()
+    {
+        distToObj = pos - cameraPos;
     }
 
     private void ClampAdjacent()
