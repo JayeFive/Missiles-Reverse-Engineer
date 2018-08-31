@@ -7,6 +7,8 @@ public class GamePlay : MonoBehaviour {
     private Airplane airplane;
     public TouchJoystick joystick;
 
+    public int starScore = 0;
+
 	// Use this for initialization
 	void Start ()
     {
