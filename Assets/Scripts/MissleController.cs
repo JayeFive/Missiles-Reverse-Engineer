@@ -126,6 +126,7 @@ public class MissleController : MonoBehaviour {
     {
         isActive = false;
         smokeTrail.transform.parent = null;
+        transform.DetachChildren();
         GetComponent<OffscreenIndicator>().DestroyIndicator();
         Destroy(GetComponent<OffscreenIndicator>());
     }
