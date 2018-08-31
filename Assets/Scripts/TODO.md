@@ -12,11 +12,13 @@ TODO LIST
 	* Potentially more gameplay testing on the original to find more types
   2. Missile random spawner. Should get more difficult over time
   3. Bonus star spawner
-     * Make parent objects that spawn in predermined locations fromt he airplane, then choose randomly from bonus arrangments.
+     * Spawn randomly from array of bonus patterns (single, line, diamond)
+	 * Bonus star collision adds one star to the UI (IMPLEMENTED, TESTING 8/30)
   4. Power-up spawner
-	 * If the player currently has a powerup active, don't spawn another one.
+	 * Spawn less often than stars randomly from array of power-ups, no world overlap
   5. Point scoring
-  6. Missile and bonus/powerup offscreen position indicators
+  6. Missile and bonus/powerup offscreen position indicators (IMPLEMENTED, TESTING 8/30)
+  7. Gameover and scoring
 3. UI
   1. Intro screen
   2. Game over screen and restart functionality
