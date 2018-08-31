@@ -189,7 +189,6 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
     public void DestroyIndicator ()
     {
-        Debug.Log("Destroying");
         Destroy(indicator);
     }
 }
