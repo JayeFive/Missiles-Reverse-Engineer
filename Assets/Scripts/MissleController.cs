@@ -29,13 +29,16 @@ public class MissleController : MonoBehaviour {
         smokeTrail = (GameObject)Resources.Load("Prefabs/smokeTrail");
         rb2D = GetComponent<Rigidbody2D>();
         explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
+        gameObject.AddComponent<OffscreenIndicator>();
+        GetComponent<OffscreenIndicator>().indicatorSprite = (GameObject)Resources.Load("Prefabs/missleWarningIndicator");
 
         Instantiate(smokeTrail, transform);
         StartCoroutine(StartMissile());
 
         fadeFlightSpeed = flightSpeed * fadeSpeedModifier;
+
     }
-	
+
 	void FixedUpdate ()
     {
         if (isActive)
@@ -85,10 +88,8 @@ public class MissleController : MonoBehaviour {
 
     private IEnumerator MissleFade()
     {
-        isActive = false;
-
-        transform.DetachChildren();
         flightSpeed = fadeFlightSpeed;
+        RemoveComponents();
 
         for (float scale = 1; scale > 0; scale -= fadeSpeed)
         {
@@ -104,10 +105,10 @@ public class MissleController : MonoBehaviour {
     {
         if (other.gameObject.tag == "Missle")
         {
-            smokeTrail.transform.parent = null;
             GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
             explosion.GetComponent<ExplosionController>().MissleToMissle();
-            transform.DetachChildren();
+
+            RemoveComponents();
             Destroy(gameObject);
         }
         else if (other.gameObject.tag == "Airplane")
@@ -120,5 +121,12 @@ public class MissleController : MonoBehaviour {
         }
     }
 
-
+    // Garbage
+    private void RemoveComponents ()
+    {
+        isActive = false;
+        smokeTrail.transform.parent = null;
+        GetComponent<OffscreenIndicator>().DestroyIndicator();
+        Destroy(GetComponent<OffscreenIndicator>());
+    }
 }

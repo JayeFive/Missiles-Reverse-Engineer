@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class OffscreenIndicator : MonoBehaviour {
 
-    [SerializeField] GameObject indicatorSprite;
+    public GameObject indicatorSprite;
     private Airplane airplane;
     private GameObject indicator;
 
@@ -30,8 +30,10 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Monobehaviors
     void Start()
     {
-        airplane    = FindObjectOfType<Airplane>();
-        indicator   = Instantiate(indicatorSprite, transform.position, Quaternion.identity);
+        airplane  = FindObjectOfType<Airplane>();
+        indicator = Instantiate(indicatorSprite, transform.position, Quaternion.identity);
+
+        indicator.transform.parent = gameObject.transform;
         screenLimit = DetermineScreenLimits();
     }   
 
@@ -76,7 +78,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
     private float FindAngleToCorner ()
     {
-        return Vector2.Angle(CreateVectorToCorner(), transform.right);
+        return Vector2.Angle(CreateVectorToCorner(), Vector2.right);
     }
 
     private Vector2 CreateVectorToCorner ()
@@ -96,7 +98,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Trig methods
     private void SetAxisHorizontal ()
     {
-        axis = transform.right;
+        axis = Vector2.right;
         pos = transform.position.x;
         airplanePos = airplane.transform.position.x;
         cameraPos = Camera.main.transform.position.x;
@@ -106,7 +108,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
     private void SetAxisVertical ()
     {
-        axis = transform.up;
+        axis = Vector2.up;
         pos = transform.position.y;
         airplanePos = airplane.transform.position.y;
         cameraPos = Camera.main.transform.position.y;
@@ -179,10 +181,16 @@ public partial class OffscreenIndicator : MonoBehaviour {
     }
 
 
-    // Visibility methods
-    private void EnableIndicatorSprite (bool show)
+    // Hide and destroy methods
+    private void EnableIndicatorSprite(bool show)
     {
         indicator.GetComponent<SpriteRenderer>().enabled = show;
+    }
+
+    public void DestroyIndicator ()
+    {
+        Debug.Log("Destroying");
+        Destroy(indicator);
     }
 }
 
