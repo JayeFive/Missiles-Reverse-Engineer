@@ -23,6 +23,7 @@ public class Airplane : MonoBehaviour {
 	void Update ()
     {
         rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
+
         rb2D.AddForce(transform.right * flightSpeed);
 
         if (startingTurnComplete)
