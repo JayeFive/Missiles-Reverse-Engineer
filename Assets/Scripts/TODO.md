@@ -16,9 +16,9 @@ TODO LIST
 	 * Bonus star collision adds one star to the UI (IMPLEMENTED, TESTING 8/30)
   4. Power-up spawner
 	 * Spawn less often than stars randomly from array of power-ups, no world overlap
-  5. Point scoring
-  6. Missile and bonus/powerup offscreen position indicators (IMPLEMENTED, TESTING 8/30)
-  7. Gameover and scoring
+  5. Missile and bonus/powerup offscreen position indicators (IMPLEMENTED, TESTING 8/30)
+  6. Missle collision with airplane
+  7. Scoring
 3. UI
   1. Intro screen
   2. Game over screen and restart functionality
