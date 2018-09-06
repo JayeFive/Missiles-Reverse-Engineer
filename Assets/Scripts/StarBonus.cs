@@ -27,6 +27,7 @@ public class StarBonus : MonoBehaviour {
             gamePlay.starScore++;
             starScore.GetComponent<Text>().text = gamePlay.starScore.ToString();
 
+            gameObject.GetComponentInParent<StarBonusArrangement>().NumChildren--;
             Destroy(gameObject);
         }
     }

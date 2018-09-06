@@ -9,6 +9,12 @@ public class StarBonusArrangement : MonoBehaviour {
     private float spawnPercentage = 0.0f;
     private float chanceMin = 0.0f;
     private float chanceMax = 0.0f;
+    private int numChildren = 0;
+
+    void Start()
+    {
+        numChildren = transform.childCount;
+    }
 
     public float SpawnPercentage
     {
@@ -26,5 +32,18 @@ public class StarBonusArrangement : MonoBehaviour {
     {
         get { return chanceMax; }
         set { chanceMax = value; }
+    }
+
+    public int NumChildren
+    {
+        get { return numChildren; }
+        set
+        {
+            numChildren = value;
+            if (numChildren == 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

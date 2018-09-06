@@ -7,7 +7,6 @@ public class BonusSpawner : MonoBehaviour {
     private Airplane airplane;
    
     public static StarBonusArrangement[] starBonusArrangements;
-    float totalPercentage = 0.0f;
 
     [SerializeField] GameObject shieldBonus;
     [SerializeField] GameObject speedBonus;
@@ -23,6 +22,7 @@ public class BonusSpawner : MonoBehaviour {
     [SerializeField] float powerUpTimerMax = 0.0f;
 
     private int totalSpawnWeight = 0;
+    private float totalPercentage = 0.0f;
 
     // Use this for initialization
     void Start ()
@@ -48,8 +48,7 @@ public class BonusSpawner : MonoBehaviour {
     {
         yield return new WaitForSeconds(GetSpawnTimer(starTimerMin, starTimerMax));
 
-        var arrangement = SelectStarArrangement().gameObject;
-        SpawnBonus(arrangement);
+        SpawnBonus(SelectStarArrangement());
 
         StartCoroutine(SpawnStars());
     }
@@ -66,6 +65,8 @@ public class BonusSpawner : MonoBehaviour {
 
     private void FindTotalWeight ()
     {
+        totalSpawnWeight = 0;
+
         foreach (StarBonusArrangement arrangement in starBonusArrangements)
         {
             totalSpawnWeight += arrangement.spawnWeight;
@@ -74,6 +75,7 @@ public class BonusSpawner : MonoBehaviour {
 
     private void SetWeightRanges ()
     {
+        totalPercentage = 0.0f;
         float lastMax = 0.0f;
 
         foreach (StarBonusArrangement arrangement in starBonusArrangements)
@@ -96,6 +98,8 @@ public class BonusSpawner : MonoBehaviour {
             }
         }
 
+        Debug.Log("total percentage = " + totalPercentage);
+        Debug.Log("selection = " + selection);
         Debug.Log("No spawn arrangement selected!");
         return null;
     }
