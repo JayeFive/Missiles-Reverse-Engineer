@@ -147,8 +147,8 @@
      <Compile Include="Assets\Scripts\OffscreenIndicator.cs" />
      <Compile Include="Assets\Scripts\smokeTrail.cs" />
      <Compile Include="Assets\Scripts\StarBonus.cs" />
+     <Compile Include="Assets\Scripts\StarBonusArrangement.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
-     <Compile Include="Assets\Scripts\TokenSpawner.cs" />
      <Compile Include="Assets\Scripts\TouchJoystick.cs" />
      <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
      <None Include="Assets\EasyTouchBundle\EasyTouchControls\Documentation\Version 2.0.txt" />
