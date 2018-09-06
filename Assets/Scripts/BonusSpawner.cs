@@ -98,8 +98,6 @@ public class BonusSpawner : MonoBehaviour {
             }
         }
 
-        Debug.Log("total percentage = " + totalPercentage);
-        Debug.Log("selection = " + selection);
         Debug.Log("No spawn arrangement selected!");
         return null;
     }
