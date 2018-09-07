@@ -131,7 +131,7 @@
     <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\ETCJoystick.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
     <Compile Include="Assets\Scripts\Airplane.cs" />
-    <Compile Include="Assets\Scripts\BonusSpawner.cs" />
+    <Compile Include="Assets\Scripts\StarBonusSpawner.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\circle.cs" />
     <Compile Include="Assets\Scripts\ExplosionController.cs" />
@@ -147,12 +147,12 @@
     <Compile Include="Assets\Scripts\MissleSpawns\SingleLongMissle.cs" />
     <Compile Include="Assets\Scripts\OffscreenIndicator.cs" />
     <Compile Include="Assets\Scripts\smokeTrail.cs" />
-    <Compile Include="Assets\Scripts\WeightedSpawner.cs" />
+    <Compile Include="Assets\Scripts\SpawnWeight.cs" />
     <Compile Include="Assets\Scripts\StarBonus.cs" />
     <Compile Include="Assets\Scripts\StarBonusArrangement.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\TouchJoystick.cs" />
-    <Compile Include="Assets\Scripts\WeightedSpawnable.cs" />
+    <Compile Include="Assets\Scripts\WeightedSpawner.cs" />
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\Documentation\Version 2.0.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\_Documentation\How to migrate from EasyTouch 4.X.txt" />

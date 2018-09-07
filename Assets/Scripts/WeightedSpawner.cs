@@ -4,19 +4,20 @@ using UnityEngine;
 
 public static class WeightedSpawner
 {
-    public static GameObject RunWeight (IList<WeightedSpawnable> objs)
+    public static GameObject GetChanceObj (IList<SpawnWeight> objs)
     {
-        int totalWeight = FindTotalWeight(objs);
-        float totalPercentage = SetWeightRanges(objs, totalWeight);
+        int totalWeight = TotalWeight(objs);
+        float totalPercentage = TotalPercentage(objs, totalWeight);
+        SetWeightRanges(objs, totalWeight);
 
-        return FindSelection(objs, totalPercentage);
+        return ChanceObj(objs, totalPercentage);
     }
 
-    private static int FindTotalWeight(IList<WeightedSpawnable> objs)
+    private static int TotalWeight(IList<SpawnWeight> objs)
     {
         int totalWeight = 0;
 
-        foreach (WeightedSpawnable obj in objs)
+        foreach (SpawnWeight obj in objs)
         {
             totalWeight += obj.spawnWeight;
         }
@@ -24,28 +25,37 @@ public static class WeightedSpawner
         return totalWeight;
     }
 
-    private static float SetWeightRanges(IList<WeightedSpawnable> objs, int totalWeight)
+    private static float TotalPercentage(IList<SpawnWeight> objs, int totalWeight)
     {
         float totalPercentage = 0.0f;
-        float lastMax = 0.0f;
-        
-        foreach (WeightedSpawnable obj in objs)
+
+        foreach (SpawnWeight obj in objs)
         {
-            obj.SpawnPercentage = (float)obj.spawnWeight / totalWeight;
-            obj.ChanceMin = lastMax;
-            obj.ChanceMax = obj.ChanceMin + obj.SpawnPercentage;
-            lastMax = obj.ChanceMax;
             totalPercentage += obj.SpawnPercentage;
         }
 
         return totalPercentage;
     }
 
-    private static GameObject FindSelection(IList<WeightedSpawnable> objs, float totalPercentage)
+    private static void SetWeightRanges(IList<SpawnWeight> objs, int totalWeight)
+    {
+        float lastMax = 0.0f;
+        
+        foreach (SpawnWeight obj in objs)
+        {
+            obj.SpawnPercentage = (float)obj.spawnWeight / totalWeight;
+            obj.ChanceMin = lastMax;
+            obj.ChanceMax = obj.ChanceMin + obj.SpawnPercentage;
+            lastMax = obj.ChanceMax;
+        }
+
+    }
+
+    private static GameObject ChanceObj(IList<SpawnWeight> objs, float totalPercentage)
     {
         float rng = Random.Range(0.0f, totalPercentage);
 
-        foreach (WeightedSpawnable obj in objs)
+        foreach (SpawnWeight obj in objs)
         {
             if (rng >= obj.ChanceMin && rng < obj.ChanceMax)
             {

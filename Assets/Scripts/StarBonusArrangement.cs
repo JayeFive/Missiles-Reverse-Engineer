@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarBonusArrangement : WeightedSpawnable {
+public class StarBonusArrangement : SpawnWeight {
 
     private int children = 0;
 
@@ -14,7 +14,10 @@ public class StarBonusArrangement : WeightedSpawnable {
 
     public int Children
     {
-        get { return children; }
+        get
+        {
+            return children;
+        }
         set
         {
             children = value;
