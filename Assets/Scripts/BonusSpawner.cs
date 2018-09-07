@@ -38,12 +38,6 @@ public class BonusSpawner : MonoBehaviour {
         StartCoroutine(SpawnStars());
     }
 	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
     private IEnumerator SpawnStars ()
     {
         yield return new WaitForSeconds(GetSpawnTimer(starTimerMin, starTimerMax));
@@ -55,51 +49,7 @@ public class BonusSpawner : MonoBehaviour {
 
     private GameObject SelectStarArrangement()
     {
-        FindTotalWeight();
-        SetWeightRanges();
-
-        float selection = Random.Range(0.0f, totalPercentage);
-
-        return FindSelection(selection);
-    }
-
-    private void FindTotalWeight ()
-    {
-        totalSpawnWeight = 0;
-
-        foreach (StarBonusArrangement arrangement in starBonusArrangements)
-        {
-            totalSpawnWeight += arrangement.spawnWeight;
-        }
-    }
-
-    private void SetWeightRanges ()
-    {
-        totalPercentage = 0.0f;
-        float lastMax = 0.0f;
-
-        foreach (StarBonusArrangement arrangement in starBonusArrangements)
-        {
-            arrangement.SpawnPercentage = (float)arrangement.spawnWeight / totalSpawnWeight;
-            arrangement.ChanceMin = lastMax;
-            arrangement.ChanceMax = arrangement.ChanceMin + arrangement.SpawnPercentage;
-            lastMax = arrangement.ChanceMax;
-            totalPercentage += arrangement.SpawnPercentage;
-        }
-    }
-
-    private GameObject FindSelection (float selection)
-    {
-        foreach (StarBonusArrangement arrangement in starBonusArrangements)
-        {
-            if (selection >= arrangement.ChanceMin && selection < arrangement.ChanceMax)
-            {
-                return arrangement.gameObject;
-            }
-        }
-
-        Debug.Log("No spawn arrangement selected!");
-        return null;
+        return WeightedSpawner.RunWeight(starBonusArrangements);
     }
 
     private IEnumerator SpawnPowerUps ()

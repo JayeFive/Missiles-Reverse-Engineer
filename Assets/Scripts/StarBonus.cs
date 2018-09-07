@@ -22,9 +22,9 @@ public class StarBonus : MonoBehaviour {
     {
         if (other.gameObject.tag == "Airplane")
         {
-            gamePlay.starScore++;
+            gamePlay.StarScore++;
 
-            gameObject.GetComponentInParent<StarBonusArrangement>().NumChildren--;
+            gameObject.GetComponentInParent<StarBonusArrangement>().Children--;
             Destroy(gameObject);
         }
     }
