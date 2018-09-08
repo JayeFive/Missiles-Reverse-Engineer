@@ -4,66 +4,52 @@ using UnityEngine;
 
 public static class WeightedSpawner
 {
-    public static GameObject GetChanceObj (IList<SpawnWeight> objs)
+    public static GameObject GetChanceArrangement (IList<Arrangement> arrangements)
     {
-        int totalWeight = TotalWeight(objs);
-        float totalPercentage = TotalPercentage(objs, totalWeight);
-        SetWeightRanges(objs, totalWeight);
+        float totalWeight = TotalWeight(arrangements);
+        SetWeightRanges(arrangements, totalWeight);
 
-        return ChanceObj(objs, totalPercentage);
+        return ChanceArrangement(arrangements, totalWeight);
     }
 
-    private static int TotalWeight(IList<SpawnWeight> objs)
+    private static float TotalWeight(IList<Arrangement> arrangements)
     {
-        int totalWeight = 0;
+        float totalWeight = 0.0f;
 
-        foreach (SpawnWeight obj in objs)
+        foreach (Arrangement arrangement in arrangements)
         {
-            totalWeight += obj.spawnWeight;
+            totalWeight += arrangement.FractionalWeight;
         }
 
         return totalWeight;
     }
 
-    private static float TotalPercentage(IList<SpawnWeight> objs, int totalWeight)
+    private static void SetWeightRanges(IList<Arrangement> arrangements, float totalWeight)
     {
-        float totalPercentage = 0.0f;
-
-        foreach (SpawnWeight obj in objs)
-        {
-            totalPercentage += obj.SpawnPercentage;
-        }
-
-        return totalPercentage;
-    }
-
-    private static void SetWeightRanges(IList<SpawnWeight> objs, int totalWeight)
-    {
-        float lastMax = 0.0f;
+        float lastMax = 0.0f; 
         
-        foreach (SpawnWeight obj in objs)
+        foreach (Arrangement arrangement in arrangements)
         {
-            obj.SpawnPercentage = (float)obj.spawnWeight / totalWeight;
-            obj.ChanceMin = lastMax;
-            obj.ChanceMax = obj.ChanceMin + obj.SpawnPercentage;
-            lastMax = obj.ChanceMax;
+            Debug.Log(arrangement.name + "'s chance to spawn: " + arrangement.FractionalWeight / totalWeight);
+            arrangement.ChanceMin = lastMax;
+            arrangement.ChanceMax = arrangement.ChanceMin + arrangement.FractionalWeight;
+            lastMax = arrangement.ChanceMax;
         }
-
     }
 
-    private static GameObject ChanceObj(IList<SpawnWeight> objs, float totalPercentage)
+    private static GameObject ChanceArrangement(IList<Arrangement> arrangements, float totalWeight)
     {
-        float rng = Random.Range(0.0f, totalPercentage);
+        float rng = Random.Range(0.0f, totalWeight);
 
-        foreach (SpawnWeight obj in objs)
+        foreach (Arrangement arrangement in arrangements)
         {
-            if (rng >= obj.ChanceMin && rng < obj.ChanceMax)
+            if (rng >= arrangement.ChanceMin && rng < arrangement.ChanceMax)
             {
-                return obj.gameObject;
+                return arrangement.gameObject;
             }
         }
 
-        Debug.Log("Weighted spawner returned null!");
+        Debug.Log("Weighted spawner returned null!"); // impossible to reach
         return null;
     }
 }

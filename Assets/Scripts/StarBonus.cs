@@ -24,7 +24,7 @@ public class StarBonus : MonoBehaviour {
         {
             gamePlay.StarScore++;
 
-            gameObject.GetComponentInParent<StarBonusArrangement>().Children--;
+            gameObject.GetComponentInParent<Arrangement>().Children--;
             Destroy(gameObject);
         }
     }
