@@ -12,17 +12,19 @@ public class SceneSpawnController : MonoBehaviour
     [SerializeField] private Arrangement[] arrangements = new Arrangement[0];
 
     // Logic fields
-    private int currentSceneWeight = 0;
-
-    // MaxSceneWeight property for missile spawn weight growing over time
-    public int MaxSceneWeight
-    {
-        get { return maxSceneWeight; }
-        set { maxSceneWeight = value; }
-    }
+    private List<GameObject> currentSceneArrangements = new List<GameObject>();
 
     void Start ()
     {
+        if (arrangements.Length > 0)
+        {
+            type = arrangements[0].gameObject.tag;
+        } 
+        else
+        {
+            type = "No arrangements found";
+        }
+
         StartCoroutine(Spawn());
     }
 
@@ -36,19 +38,18 @@ public class SceneSpawnController : MonoBehaviour
         if (spawnableArrangements.Count > 0)
         {
             var arrangementToSpawn = WeightedSpawner.GetChanceArrangement(spawnableArrangements);
-            Vector2 loc = GetSpawnLoc();
-            Instantiate(arrangementToSpawn, loc, Quaternion.identity);
+            Instantiate(arrangementToSpawn, GetSpawnLoc(), Quaternion.identity);
+            currentSceneArrangements.Add(arrangementToSpawn);
         }
 
         StartCoroutine(Spawn());
     }
     
-
-    
     // Determine spawnable arrangement list
     private List<Arrangement> SpawnableArrangements ()
     {
         List<Arrangement> spawnableArrangements = new List<Arrangement>();
+        var currentSceneWeight = CurrentSceneWeight();
 
         foreach (Arrangement arrangement in arrangements)
         {
@@ -61,6 +62,21 @@ public class SceneSpawnController : MonoBehaviour
         return spawnableArrangements;
     }
 
+    private float CurrentSceneWeight ()
+    {
+        int currentSceneWeight = 0;
+        Arrangement[] sceneArrangements = FindObjectsOfType<Arrangement>();
+
+        foreach(Arrangement sceneArrangement in sceneArrangements)
+        {
+            if (sceneArrangement.gameObject.tag == type)
+            {
+                currentSceneWeight += sceneArrangement.SpawnWeight;
+            }
+        }
+
+        return currentSceneWeight;
+    }
 
 
     // Location determination to be moved later

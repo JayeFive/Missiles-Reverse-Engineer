@@ -30,7 +30,6 @@ public static class WeightedSpawner
         
         foreach (Arrangement arrangement in arrangements)
         {
-            Debug.Log(arrangement.name + "'s chance to spawn: " + arrangement.FractionalWeight / totalWeight);
             arrangement.ChanceMin = lastMax;
             arrangement.ChanceMax = arrangement.ChanceMin + arrangement.FractionalWeight;
             lastMax = arrangement.ChanceMax;
