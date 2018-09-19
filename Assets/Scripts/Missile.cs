@@ -7,11 +7,19 @@ public class Missile : MonoBehaviour {
     [SerializeField] private float flightSpeed;
     [SerializeField] private float turnSpeed;
     [SerializeField] private float lifeSpan;
-    [SerializeField] private float waitToSpawn;
-    private Vector2 spawnVector;
 
-    private GameObject explosionController;
+    [SerializeField] private float fadeSpeed = 1.0f;
+    [SerializeField] private float sputterSeconds = 0.0f;
+    private float fadeSpeedMod = 0.015f;
+
+    private Rigidbody2D rb2D;
     private GameObject smokeTrail;
+    private GameObject explosionController;
+    private Airplane airplane;
+    private GamePlay gamePlay;
+
+    private Vector2 spawnVector;
+    private bool isActive = true;
 
     public float FlightSpeed
     {
@@ -31,24 +39,90 @@ public class Missile : MonoBehaviour {
         set { lifeSpan = value; }
     }
 
-    public float WaitToSpawn
-    {
-        get { return waitToSpawn; }
-        set { waitToSpawn = value; }
-    }
-
     public Vector2 SpawnLocation
     {
         get { return spawnVector; }
     }
 
-    // Monobehavior
+    // MonoBehavior
     void Start ()
     {
         spawnVector = Camera.main.transform.position - transform.position;
         explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
         smokeTrail = (GameObject)Resources.Load("Prefabs/smokeTrail");
         Instantiate(smokeTrail, transform);
+
+        LoadResources();
+        StartMissile();
+    }
+
+    void FixedUpdate()
+    {
+        if (isActive)
+        {
+            Vector2 direction = ((Vector2)airplane.transform.position - rb2D.position).normalized;
+            float rotateAmount = Vector3.Cross(direction, transform.right).z;
+            rb2D.angularVelocity = (-turnSpeed * rotateAmount);
+            rb2D.velocity = transform.right * flightSpeed;
+        }
+        else
+        {
+            rb2D.angularVelocity = 0.0f;
+        }
+    }
+
+    // Lifespan methods and coroutines
+    private void LoadResources()
+    {
+        gamePlay = FindObjectOfType<GamePlay>();
+        airplane = FindObjectOfType<Airplane>();
+        rb2D = GetComponent<Rigidbody2D>();
+        gameObject.AddComponent<OffscreenIndicator>();
+        GetComponent<OffscreenIndicator>().indicatorSprite = (GameObject)Resources.Load("Prefabs/missileWarningIndicator");
+    }
+
+    private void StartMissile()
+    {
+        StartCoroutine(RunMissileToSputter());
+    }
+
+    private IEnumerator RunMissileToSputter()
+    {
+        yield return new WaitForSeconds(lifeSpan - sputterSeconds);
+
+        StartCoroutine(SputterOut());
+    }
+
+    private IEnumerator SputterOut()
+    {
+        var smokeTrail = transform.Find("smokeTrail(Clone)");
+
+        if (smokeTrail != null)
+        {
+            smokeTrail.GetComponent<smokeTrail>().SputterTrail();
+        }
+        else
+        {
+            Debug.Log("Smoke trail not found!");
+        }
+
+        yield return new WaitForSeconds(sputterSeconds);
+
+        StartCoroutine(MissileFade());
+    }
+
+    private IEnumerator MissileFade()
+    {
+        RemoveComponents();
+        var _fadeSpeed = fadeSpeed * fadeSpeedMod;
+
+        for (float scale = 1; scale > 0; scale -= _fadeSpeed)
+        {
+            transform.localScale = new Vector3(scale, scale, 0);
+            yield return null;
+        }
+
+        DestroyMissile();
     }
 
     //Collisions
@@ -75,7 +149,7 @@ public class Missile : MonoBehaviour {
     // Garbage
     public void RemoveComponents()
     {
-        GetComponent<MissileController>().isActive = false;
+        isActive = false;
         smokeTrail.transform.parent = null;
         transform.DetachChildren();
         GetComponent<OffscreenIndicator>().DestroyIndicator();
@@ -84,7 +158,7 @@ public class Missile : MonoBehaviour {
 
     public void DestroyMissile ()
     {
-        GetComponentInParent<Arrangement>().Children--;
+        GetComponentInParent<Arrangement>().NumChildren--;
         Destroy(gameObject);
     }
 }
