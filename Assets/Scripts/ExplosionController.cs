@@ -21,7 +21,7 @@ public class ExplosionController : MonoBehaviour
     [SerializeField] float cloudDriftSpeed;
     [SerializeField] float cloudDriftSpeedModifier;
 
-    public void MissleToMissle()
+    public void MissileToMissile()
     {
         BeginAnimation(numSmokeCircles, smokeCircleRange, false);
         BeginAnimation(numExplosionCircles, explosionCircleRange, true);
