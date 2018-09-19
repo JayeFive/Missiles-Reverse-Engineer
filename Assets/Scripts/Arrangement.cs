@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Arrangement : MonoBehaviour {
 
     [SerializeField] private int spawnWeight = 0;
+    [SerializeField] private float[] spawnDelays = new float[0];
     private float fractionalWeight = 0.0f;
     private float chanceMin = 0.0f;
     private float chanceMax = 0.0f;
-    private int children = 0;
+    private int numChildren = 0;
 
-    public int Children
+    public int NumChildren
     {
         get
         {
-            return children;
+            return numChildren;
         }
         set
         {
-            children = value;
-            if (children == 0)
+            numChildren = value;
+            if (numChildren == 0)
             {
                 Destroy(gameObject);
             }
@@ -54,9 +54,29 @@ public class Arrangement : MonoBehaviour {
         set { chanceMax = value; }
     }
 
+    // MonoBehavior
     void Awake()
     {
-        children = transform.childCount;
+        if (spawnDelays.Length > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (spawnDelays[i] > 0)
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                    StartCoroutine(TimedDelay(transform.GetChild(i), spawnDelays[i]));
+                }
+            }
+        }
+
+        numChildren = transform.childCount;
     }
 
+    // Delay coroutines
+    private IEnumerator TimedDelay(Transform child, float t)
+    {
+        yield return new WaitForSeconds(t);
+
+        child.gameObject.SetActive(true);
+    }
 }
