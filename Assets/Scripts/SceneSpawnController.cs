@@ -13,9 +13,6 @@ public class SceneSpawnController : MonoBehaviour
     [SerializeField] private float spawnMagnitude = 0.0f;
     [SerializeField] private Arrangement[] arrangements = new Arrangement[0];
 
-    // Logic fields
-    private List<GameObject> currentSceneArrangements = new List<GameObject>();
-
     void Start()
     {
         SetTypeInEditor();
@@ -61,7 +58,6 @@ public class SceneSpawnController : MonoBehaviour
         {
             var arrangementToSpawn = WeightedSpawner.GetChanceArrangement(spawnableArrangements);
             Instantiate(arrangementToSpawn, GetSpawnLoc(arrangementToSpawn.GetComponent<Arrangement>()), Quaternion.identity);
-            currentSceneArrangements.Add(arrangementToSpawn);
         }
 
         StartCoroutine(Spawn());
@@ -108,15 +104,16 @@ public class SceneSpawnController : MonoBehaviour
         return SpawnLocations.GetSpawnLocation(arrangement, spawnMagnitude);
     }
 
+
+
+
+    /* This custom drawer is used to show the arrangemnt type for each instance of this class in the editor for readability */
+    // TODO should be in own file
     public class ReadOnlyAttribute : PropertyAttribute
     {
 
     }
 
-
-
-
-    /* This custom drawer is used to show the arrangemnt type for each instance of this class in the editor for readability */
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
