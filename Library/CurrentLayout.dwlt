@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 7}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -67,10 +67,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 988
-  m_MinSize: {x: 887, y: 492}
-  m_MaxSize: {x: 16012, y: 14042}
+  m_MinSize: {x: 883, y: 492}
+  m_MaxSize: {x: 16008, y: 14042}
   vertical: 0
-  controlID: 32
+  controlID: 9
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -232,10 +232,10 @@ MonoBehaviour:
     y: 0
     width: 1503
     height: 988
-  m_MinSize: {x: 610, y: 492}
-  m_MaxSize: {x: 12010, y: 14042}
+  m_MinSize: {x: 606, y: 492}
+  m_MaxSize: {x: 12006, y: 14042}
   vertical: 1
-  controlID: 33
+  controlID: 10
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -257,10 +257,10 @@ MonoBehaviour:
     y: 0
     width: 1503
     height: 663
-  m_MinSize: {x: 610, y: 221}
-  m_MaxSize: {x: 12010, y: 4021}
+  m_MinSize: {x: 606, y: 221}
+  m_MaxSize: {x: 12006, y: 4021}
   vertical: 0
-  controlID: 34
+  controlID: 11
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -279,8 +279,8 @@ MonoBehaviour:
     y: 0
     width: 686
     height: 663
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -379,19 +379,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Prefabs/Missiles
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources/Prefabs/Missiles
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Documents\repos\Unity\Missles\Missles!
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 133}
-    m_SelectedIDs: 500e0000
-    m_LastClickedID: 3664
+    scrollPos: {x: 0, y: 149}
+    m_SelectedIDs: d80b0000
+    m_LastClickedID: 3032
     m_ExpandedIDs: 00000000280a0000ea0a00009a0c0000500e00007a0f0000ac0f0000b80f0000ea0f000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -536,23 +536,23 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 7c080000
-    m_LastClickedID: 0
-    m_ExpandedIDs: e6fbffff00000000
+    m_SelectedIDs: a0b6f9ff
+    m_LastClickedID: -412000
+    m_ExpandedIDs: b2c4f9ff44e2fafff46ffbff3679fbff6c9bfbff08cafbff1cd6fbff68f9fcffacc2fdff8ad7fdff90d7fdff12e4fdff36f9fdff2226feff6428feffeeb9ffffc4f3ffffcaf3ffffe4fbffffe6fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: MissileTestArrangement
+      m_OriginalName: MissileTestArrangement
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: -335292
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
@@ -588,14 +588,14 @@ MonoBehaviour:
     height: 642
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 19578.75900985248
+  lastFramingTime: 16557.669547997517
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 12.256765, y: 3.7781723, z: -0.16015625}
+    m_Target: {x: -4.29248, y: -8.215881, z: -0.2174981}
     speed: 2
-    m_Value: {x: 12.256765, y: 3.7781723, z: -0.16015625}
+    m_Value: {x: -4.29248, y: -8.215881, z: -0.2174981}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -627,9 +627,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 26.466232
+    m_Target: 23.313377
     speed: 2
-    m_Value: 26.466232
+    m_Value: 23.313377
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -686,7 +686,7 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
     m_HSlider: 0
-    m_VSlider: 0
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -699,18 +699,18 @@ MonoBehaviour:
       y: 17
       width: 549
       height: 625
-    m_Scale: {x: 0.97656244, y: 0.9765625}
-    m_Translation: {x: 274.5, y: 312.5}
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 274.5, y: 309.86047}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -281.088
-      y: -320
-      width: 562.176
-      height: 640
+      x: -274.5
+      y: -309.86047
+      width: 549
+      height: 625
     m_MinimalGUI: 1
   m_defaultScale: 0.9765625
   m_TargetTexture: {fileID: 0}
