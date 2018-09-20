@@ -59,24 +59,38 @@ public class Arrangement : MonoBehaviour {
     {
         if (spawnDelays.Length > 0)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (int childIndex = 0; childIndex < spawnDelays.Length; childIndex++)
             {
-                if (spawnDelays[i] > 0)
-                {
-                    transform.GetChild(i).gameObject.SetActive(false);
-                    StartCoroutine(TimedDelay(transform.GetChild(i), spawnDelays[i]));
-                }
+                CheckForDelay(childIndex);
             }
         }
 
         numChildren = transform.childCount;
     }
 
+    private void CheckForDelay (int childIndex)
+    {
+        if (spawnDelays[childIndex] > 0)
+        {
+            DelaySpawning(childIndex);
+        }
+    }
+
+    private void DelaySpawning (int childIndex)
+    {
+        var child = transform.GetChild(childIndex);
+        var spawnVector = child.transform.position - Camera.main.transform.position;
+        child.gameObject.SetActive(false);
+
+        StartCoroutine(TimedDelay(transform.GetChild(childIndex), spawnVector, spawnDelays[childIndex]));
+    }
+
     // Delay coroutines
-    private IEnumerator TimedDelay(Transform child, float t)
+    private IEnumerator TimedDelay(Transform child, Vector3 spawnVector, float t)
     {
         yield return new WaitForSeconds(t);
 
+        child.transform.position = Camera.main.transform.position + spawnVector;
         child.gameObject.SetActive(true);
     }
 }
