@@ -18,7 +18,6 @@ public class Missile : MonoBehaviour {
     private Airplane airplane;
     private GamePlay gamePlay;
 
-    private Vector2 spawnVector;
     private bool isActive = true;
 
     public float FlightSpeed
@@ -39,15 +38,9 @@ public class Missile : MonoBehaviour {
         set { lifeSpan = value; }
     }
 
-    public Vector2 SpawnLocation
-    {
-        get { return spawnVector; }
-    }
-
     // MonoBehavior
     void Start ()
     {
-        spawnVector = Camera.main.transform.position - transform.position;
         explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
         smokeTrail = (GameObject)Resources.Load("Prefabs/smokeTrail");
         Instantiate(smokeTrail, transform);

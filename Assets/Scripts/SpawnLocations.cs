@@ -14,7 +14,7 @@ public static class SpawnLocations
             case "PowerUp":
                 break;
             case "Missile":
-                break;
+                return Camera.main.transform.position;
             default:
                 Debug.Log("arrangement tag not found in SpawnLocations.cs");
                 break;
