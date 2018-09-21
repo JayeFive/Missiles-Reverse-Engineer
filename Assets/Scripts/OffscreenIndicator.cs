@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class OffscreenIndicator : MonoBehaviour {
 
     public GameObject indicatorSprite;
+    private float fractionOfIndicatorFromEdge = 0.0f;
     private Airplane airplane;
     private GameObject indicator;
 
@@ -30,10 +31,11 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Monobehaviors
     void Start()
     {
+        fractionOfIndicatorFromEdge = FindObjectOfType<DesignOptions>().fractionOfIndicatorFromEdge;
         airplane  = FindObjectOfType<Airplane>();
         indicator = Instantiate(indicatorSprite, transform.position, Quaternion.identity);
-
         indicator.transform.parent = gameObject.transform;
+
         screenLimit = DetermineScreenLimits();
     }   
 
@@ -57,8 +59,8 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Camera methods
     private Vector2 DetermineScreenLimits ()
     {
-        float x = (Camera.main.orthographicSize * Screen.width / Screen.height) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x / 2);
-        float y = (Camera.main.orthographicSize) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x / 2);
+        float x = (Camera.main.orthographicSize * Screen.width / Screen.height) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x * fractionOfIndicatorFromEdge);
+        float y = (Camera.main.orthographicSize) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.y * fractionOfIndicatorFromEdge);
 
         return new Vector2(x, y);
     }
@@ -96,26 +98,6 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
 
     // Trig methods
-    private void SetAxisHorizontal ()
-    {
-        axis = Vector2.right;
-        pos = transform.position.x;
-        airplanePos = airplane.transform.position.x;
-        cameraPos = Camera.main.transform.position.x;
-        airplaneAxisOffset = airplaneOffset.x;
-        screenAxisLimit = screenLimit.x;
-    }
-
-    private void SetAxisVertical ()
-    {
-        axis = Vector2.up;
-        pos = transform.position.y;
-        airplanePos = airplane.transform.position.y;
-        cameraPos = Camera.main.transform.position.y;
-        airplaneAxisOffset = airplaneOffset.y;
-        screenAxisLimit = screenLimit.y;
-    }
-
     private void PerformTrig ()
     {
         FindTheta();
@@ -147,6 +129,26 @@ public partial class OffscreenIndicator : MonoBehaviour {
             SetAxisVertical();
             FindTheta();
         }
+    }
+
+    private void SetAxisHorizontal()
+    {
+        axis = Vector2.right;
+        pos = transform.position.x;
+        airplanePos = airplane.transform.position.x;
+        cameraPos = Camera.main.transform.position.x;
+        airplaneAxisOffset = airplaneOffset.x;
+        screenAxisLimit = screenLimit.x;
+    }
+
+    private void SetAxisVertical()
+    {
+        axis = Vector2.up;
+        pos = transform.position.y;
+        airplanePos = airplane.transform.position.y;
+        cameraPos = Camera.main.transform.position.y;
+        airplaneAxisOffset = airplaneOffset.y;
+        screenAxisLimit = screenLimit.y;
     }
 
     private void FindAdjacent()
