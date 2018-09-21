@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class SceneSpawnController : MonoBehaviour
 {
-    // Designer fields
+    // Editor fields
     [SerializeField][ReadOnly] private string type = "";
     [SerializeField] private int maxSceneWeight = 0;
     [SerializeField] private float spawnTimerBase = 0.0f;
@@ -83,13 +83,13 @@ public class SceneSpawnController : MonoBehaviour
     private float CurrentSceneWeight()
     {
         int currentSceneWeight = 0;
-        Arrangement[] sceneArrangements = FindObjectsOfType<Arrangement>();
+        Arrangement[] ActiveArrangements = FindObjectsOfType<Arrangement>();
 
-        foreach (Arrangement sceneArrangement in sceneArrangements)
+        foreach (Arrangement activeArrangement in ActiveArrangements)
         {
-            if (sceneArrangement.gameObject.tag == type)
+            if (activeArrangement.gameObject.tag == type)
             {
-                currentSceneWeight += sceneArrangement.SpawnWeight;
+                currentSceneWeight += activeArrangement.SpawnWeight;
             }
         }
 
