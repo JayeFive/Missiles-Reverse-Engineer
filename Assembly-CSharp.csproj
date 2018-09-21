@@ -140,8 +140,6 @@
      <Compile Include="Assets\Scripts\MapInitializer.cs" />
      <Compile Include="Assets\Scripts\MapTile.cs" />
      <Compile Include="Assets\Scripts\Missile.cs" />
-     <Compile Include="Assets\Scripts\MissleSpawns\MediumMissleTriple.cs" />
-     <Compile Include="Assets\Scripts\MissleSpawns\SingleLongMissle.cs" />
      <Compile Include="Assets\Scripts\OffscreenIndicator.cs" />
      <Compile Include="Assets\Scripts\SceneSpawnController.cs" />
      <Compile Include="Assets\Scripts\smokeTrail.cs" />
