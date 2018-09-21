@@ -70,8 +70,6 @@ public class Missile : MonoBehaviour {
         gamePlay = FindObjectOfType<GamePlay>();
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
-        gameObject.AddComponent<OffscreenIndicator>();
-        GetComponent<OffscreenIndicator>().indicatorSprite = (GameObject)Resources.Load("Prefabs/missileWarningIndicator");
     }
 
     private void StartMissile()
