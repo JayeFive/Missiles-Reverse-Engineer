@@ -46,8 +46,9 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
         SetAxisHorizontal();
         PerformTrig();
-        
+
         indicator.transform.position = (Vector2)(airplane.transform.position) + (toObj.normalized * hypotenuse);
+        indicator.transform.localRotation = Quaternion.Euler(0, 0, 180.0f);
     }
 
     void FixedUpdate ()
