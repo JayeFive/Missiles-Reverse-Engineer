@@ -49,7 +49,7 @@ public class Missile : MonoBehaviour {
         StartMissile();
     }
 
-    void FixedUpdate()
+    void FixedUpdate ()
     {
         if (isActive)
         {
@@ -65,14 +65,14 @@ public class Missile : MonoBehaviour {
     }
 
     // Lifespan methods and coroutines
-    private void LoadResources()
+    private void LoadResources ()
     {
         gamePlay = FindObjectOfType<GamePlay>();
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
     }
 
-    private void StartMissile()
+    private void StartMissile ()
     {
         StartCoroutine(RunMissileToSputter());
     }
@@ -84,25 +84,23 @@ public class Missile : MonoBehaviour {
         StartCoroutine(SputterOut());
     }
 
-    private IEnumerator SputterOut()
+    private IEnumerator SputterOut ()
     {
-        var smokeTrail = transform.Find("smokeTrail(Clone)");
+        var smokeTrail = transform.Find("smokeTrail(Clone)").GetComponent<SmokeTrail>();
 
-        if (smokeTrail != null)
-        {
-            smokeTrail.GetComponent<smokeTrail>().SputterTrail();
-        }
-        else
-        {
-            Debug.Log("Smoke trail not found!");
-        }
+        smokeTrail.SputterTrail();
 
-        yield return new WaitForSeconds(sputterSeconds);
+        yield return new WaitForSeconds(sputterSeconds / 2);
+        smokeTrail.burstCount--;
+        smokeTrail.SputterTrail();
 
+        yield return new WaitForSeconds(sputterSeconds / 2);
+
+        smokeTrail.DisableBursts();
         StartCoroutine(MissileFade());
     }
 
-    private IEnumerator MissileFade()
+    private IEnumerator MissileFade ()
     {
         RemoveComponents();
         var _fadeSpeed = fadeSpeed * fadeSpeedMod;
@@ -117,7 +115,7 @@ public class Missile : MonoBehaviour {
     }
 
     //Collisions
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D (Collider2D other)
     {
         if (other.gameObject.tag == "Missile")
         {
@@ -138,9 +136,10 @@ public class Missile : MonoBehaviour {
     }
 
     // Garbage
-    public void RemoveComponents()
+    public void RemoveComponents ()
     {
         isActive = false;
+        smokeTrail.GetComponent<SmokeTrail>().DisableBursts();
         smokeTrail.transform.parent = null;
         transform.DetachChildren();
         GetComponent<OffscreenIndicator>().DestroyIndicator();

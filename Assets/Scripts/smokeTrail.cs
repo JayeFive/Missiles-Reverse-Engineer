@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class smokeTrail : MonoBehaviour {
+public class SmokeTrail : MonoBehaviour {
 
-    [SerializeField] int burstCount;
+    [SerializeField] public int burstCount;
     [SerializeField] float timeBetweenBursts;
 
     private ParticleSystem smokeParticles;
@@ -34,10 +34,18 @@ public class smokeTrail : MonoBehaviour {
 
         for (int i = 0; i < burstCount; i++)
         {
-            var burst = new ParticleSystem.Burst(i * 0.1f, 1, 1, 0, timeBetweenBursts);
+            var burst = new ParticleSystem.Burst(i * 0.1f, 1, 1, 5, timeBetweenBursts);
             emissionModule.SetBurst(i, burst);
         }
+    }
 
+    public void DisableBursts ()
+    {
+        for (int i = 0; i < burstCount; i++)
+        {
+            var burst = new ParticleSystem.Burst(0, 0);
+            emissionModule.SetBurst(i, burst);
+        }
     }
 
     private void CheckForEnd ()
