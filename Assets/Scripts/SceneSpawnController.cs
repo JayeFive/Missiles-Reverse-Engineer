@@ -13,6 +13,8 @@ public class SceneSpawnController : MonoBehaviour
     [SerializeField] private float spawnMagnitude = 0.0f;
     [SerializeField] private Arrangement[] arrangements = new Arrangement[0];
 
+
+    // Monobehavior
     void Start()
     {
         SetTypeInEditor();
@@ -20,6 +22,8 @@ public class SceneSpawnController : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
+
+    // Arrangement methods and coroutines
     private void SetTypeInEditor ()
     {
         if (arrangements.Length > 0)
@@ -47,7 +51,6 @@ public class SceneSpawnController : MonoBehaviour
         return _type;
     }
 
-    // Spawning Coroutine
     private IEnumerator Spawn()
     {
         yield return new WaitForSeconds(Random.Range(spawnTimerBase - spawnTimerVariation, spawnTimerBase + spawnTimerVariation));
@@ -63,7 +66,6 @@ public class SceneSpawnController : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
-    // Determine spawnable arrangement list
     private List<Arrangement> SpawnableArrangements()
     {
         List<Arrangement> spawnableArrangements = new List<Arrangement>();
@@ -96,9 +98,6 @@ public class SceneSpawnController : MonoBehaviour
         return currentSceneWeight;
     }
 
-
-    // Location determination to be moved later
-    // For testing, spawns center screen
     private Vector2 GetSpawnLoc(Arrangement arrangement)
     {
         return SpawnLocations.GetSpawnLocation(arrangement, spawnMagnitude);

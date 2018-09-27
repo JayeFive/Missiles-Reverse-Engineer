@@ -12,20 +12,18 @@ public static class SpawnLocations
             case "StarBonus":
                 return StarBonusLoc(spawnMagnitude);
             case "PowerUp":
-                break;
+                return new Vector2(0, 0);
             case "Missile":
                 return Camera.main.transform.position;
             default:
                 Debug.Log("arrangement tag not found in SpawnLocations.cs");
-                break;
+                return new Vector2(0, 0);
         }
-
-        return new Vector2(0, 0);
     }
 
     private static Vector2 StarBonusLoc (float spawnMagnitutde)
     {
-        var airplanePos = (Vector2)GameObject.FindObjectOfType<Airplane>().transform.position;
+        var airplanePos = (Vector2)Object.FindObjectOfType<Airplane>().transform.position;
 
         var spawnLoc = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 0.0f)).normalized;
 

@@ -143,7 +143,7 @@
      <Compile Include="Assets\Scripts\OffscreenIndicator.cs" />
      <Compile Include="Assets\Scripts\SceneSpawnController.cs" />
      <Compile Include="Assets\Scripts\ShieldPowerUp.cs" />
-     <Compile Include="Assets\Scripts\smokeTrail.cs" />
+     <Compile Include="Assets\Scripts\SmokeTrail.cs" />
      <Compile Include="Assets\Scripts\SpawnLocations.cs" />
      <Compile Include="Assets\Scripts\StarBonus.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
