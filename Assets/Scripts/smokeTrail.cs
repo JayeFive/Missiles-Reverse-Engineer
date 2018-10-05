@@ -11,8 +11,8 @@ public class SmokeTrail : MonoBehaviour {
     private ParticleSystem smokeParticles;
     private ParticleSystem.EmissionModule emissionModule;
 
-    // Bursts
 
+    // MonoBehavior
     void Start ()
     {
         smokeParticles = GetComponent<ParticleSystem>();
@@ -27,6 +27,8 @@ public class SmokeTrail : MonoBehaviour {
         }	
 	}
 
+
+    // Bursts
     public void SputterTrail ()
     {
         emissionModule.rateOverDistance = 0;
@@ -41,11 +43,7 @@ public class SmokeTrail : MonoBehaviour {
 
     public void DisableBursts ()
     {
-        for (int i = 0; i < burstCount; i++)
-        {
-            var burst = new ParticleSystem.Burst(0, 0);
-            emissionModule.SetBurst(i, burst);
-        }
+        emissionModule.SetBursts(null, 0);
     }
 
     private void CheckForEnd ()
