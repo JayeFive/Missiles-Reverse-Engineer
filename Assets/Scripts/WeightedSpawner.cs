@@ -48,7 +48,7 @@ public static class WeightedSpawner
             }
         }
 
-        Debug.Log("Weighted spawner returned null!"); // impossible to reach
+        Debug.Log("Weighted spawner returned null!");
         return null;
     }
 }

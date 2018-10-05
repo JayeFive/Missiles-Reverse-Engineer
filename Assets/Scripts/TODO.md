@@ -7,7 +7,7 @@ TODO LIST
   1. Add new types of missiles
 	* Differentiate medium missile into gray(slow) and blue(slightly faster) (IMPLEMENTED, TESTING 9/21)
     * Long-fast missile (IMPLEMENTED)
-	* Tiny slow missiles meant for barraging
+	* Tiny slow missiles meant for barraging(IMPLEMENTED)
 	* Crazy red missile
 	* Super crazy gold missile
 	* Potentially more gameplay testing on the original to find more types
