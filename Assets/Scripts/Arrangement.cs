@@ -13,18 +13,8 @@ public class Arrangement : MonoBehaviour {
 
     public int NumChildren
     {
-        get
-        {
-            return numChildren;
-        }
-        set
-        {
-            numChildren = value;
-            if (numChildren == 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        get { return numChildren; }
+        set { numChildren = value; }
     }
 
     public int SpawnWeight
@@ -68,6 +58,7 @@ public class Arrangement : MonoBehaviour {
         numChildren = transform.childCount;
     }
 
+    // Delay coroutines
     private void CheckForDelay (int childIndex)
     {
         if (spawnDelays[childIndex] > 0)
@@ -85,7 +76,6 @@ public class Arrangement : MonoBehaviour {
         StartCoroutine(TimedDelay(transform.GetChild(childIndex), spawnVector, spawnDelays[childIndex]));
     }
 
-    // Delay coroutines
     private IEnumerator TimedDelay(Transform child, Vector3 spawnVector, float t)
     {
         yield return new WaitForSeconds(t);
