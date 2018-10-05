@@ -8,6 +8,12 @@ public class Missile : MonoBehaviour {
     [SerializeField] private float turnSpeed;
     [SerializeField] private float lifeSpan;
 
+    [SerializeField] private float oscillateLength;
+    [SerializeField] private float oscillateSpeed;
+    private float oscMag = 0.0f;
+    private int oscDir = 1;
+
+
     [SerializeField] private float fadeSpeed = 1.0f;
     [SerializeField] private float sputterSeconds = 0.0f;
     private float fadeSpeedMod = 0.015f;
@@ -38,12 +44,13 @@ public class Missile : MonoBehaviour {
         set { lifeSpan = value; }
     }
 
+
     // MonoBehavior
     void Start ()
     {
         explosionController = Resources.Load<GameObject>("Prefabs/ExplosionController");
         smokeTrail = (GameObject)Resources.Load("Prefabs/smokeTrail");
-        Instantiate(smokeTrail, transform);
+        smokeTrail = Instantiate(smokeTrail, transform);
 
         LoadResources();
         StartMissile();
@@ -53,8 +60,9 @@ public class Missile : MonoBehaviour {
     {
         if (isActive)
         {
-            Vector2 direction = ((Vector2)airplane.transform.position - rb2D.position).normalized;
-            float rotateAmount = Vector3.Cross(direction, transform.right).z;
+            Vector2 missileTarget = Oscillate(((Vector2)airplane.transform.position - rb2D.position));
+
+            float rotateAmount = Vector3.Cross(missileTarget, transform.right).z;
             rb2D.angularVelocity = (-turnSpeed * rotateAmount);
             rb2D.velocity = transform.right * flightSpeed;
         }
@@ -63,6 +71,32 @@ public class Missile : MonoBehaviour {
             rb2D.angularVelocity = 0.0f;
         }
     }
+
+
+    // Oscillator
+    private Vector2 Oscillate (Vector2 directionToAirplane)
+    {
+        OscillateCalc();
+
+        Vector2 perp = Vector2.Perpendicular(directionToAirplane).normalized;
+        var finalVector = (perp * oscMag) + (Vector2)airplane.transform.position;
+
+        return (finalVector - rb2D.position).normalized;
+    }
+
+    private void OscillateCalc ()
+    {
+
+        if (oscDir * oscMag < oscillateLength)
+        {
+            oscMag += oscDir * oscillateSpeed / 100;
+        }
+        else
+        {
+            oscDir *= -1;
+        }
+    }
+
 
     // Lifespan methods and coroutines
     private void LoadResources ()
@@ -95,7 +129,6 @@ public class Missile : MonoBehaviour {
         smokeTrail.SputterTrail();
 
         yield return new WaitForSeconds(sputterSeconds / 2);
-
         smokeTrail.DisableBursts();
         StartCoroutine(MissileFade());
     }
@@ -148,7 +181,15 @@ public class Missile : MonoBehaviour {
 
     public void DestroyMissile ()
     {
-        GetComponentInParent<Arrangement>().NumChildren--;
+        UpdateArrangement();
         Destroy(gameObject);
+    }
+
+    private void UpdateArrangement ()
+    {
+        if(--GetComponentInParent<Arrangement>().NumChildren == 0)
+        {
+            Destroy(transform.parent.gameObject);
+        }
     }
 }
