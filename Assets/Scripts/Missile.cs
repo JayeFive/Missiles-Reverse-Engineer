@@ -8,6 +8,7 @@ public class Missile : MonoBehaviour {
     [SerializeField] private float turnSpeed;
     [SerializeField] private float lifeSpan;
 
+    [SerializeField] private float oscillatePrecision;
     [SerializeField] private float oscillateLength;
     [SerializeField] private float oscillateSpeed;
     private float oscMag = 0.0f;
@@ -60,9 +61,19 @@ public class Missile : MonoBehaviour {
     {
         if (isActive)
         {
-            Vector2 missileTarget = Oscillate(((Vector2)airplane.transform.position - rb2D.position));
-
+            Vector2 missileTarget = ((Vector2)airplane.transform.position - rb2D.position).normalized;
             float rotateAmount = Vector3.Cross(missileTarget, transform.right).z;
+
+            if (Mathf.Abs(rotateAmount) < oscillatePrecision)
+            {
+                missileTarget = Oscillate(missileTarget);
+                rotateAmount = Vector3.Cross(missileTarget, transform.right).z;
+            }
+            else
+            {
+                oscMag = rotateAmount < 0 ? -oscillateLength : oscillateLength;
+            }
+
             rb2D.angularVelocity = (-turnSpeed * rotateAmount);
             rb2D.velocity = transform.right * flightSpeed;
         }
