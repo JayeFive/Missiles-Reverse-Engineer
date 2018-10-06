@@ -8,9 +8,11 @@ public class Missile : MonoBehaviour {
     [SerializeField] private float turnSpeed;
     [SerializeField] private float lifeSpan;
 
-    [SerializeField] private float oscillatePrecision;
-    [SerializeField] private float oscillateLength;
-    [SerializeField] private float oscillateSpeed;
+    [SerializeField] private float oscPrecision;
+    [SerializeField] private float oscLength;
+    [SerializeField] private float oscMaxDeg;   
+    [SerializeField] private float oscSpeed;
+    private float degToAirplane;
     private float oscMag = 0.0f;
     private int oscDir = 1;
 
@@ -25,7 +27,7 @@ public class Missile : MonoBehaviour {
     private Airplane airplane;
     private GamePlay gamePlay;
 
-    private bool isActive = true;
+    private bool isActive = true; 
 
     public float FlightSpeed
     {
@@ -62,19 +64,19 @@ public class Missile : MonoBehaviour {
         if (isActive)
         {
             Vector2 missileTarget = ((Vector2)airplane.transform.position - rb2D.position).normalized;
-            float rotateAmount = Vector3.Cross(missileTarget, transform.right).z;
+            degToAirplane = Vector3.Cross(missileTarget, transform.right).z;
 
-            if (Mathf.Abs(rotateAmount) < oscillatePrecision)
+            if (Mathf.Abs(degToAirplane) * Mathf.Rad2Deg < oscPrecision)
             {
                 missileTarget = Oscillate(missileTarget);
-                rotateAmount = Vector3.Cross(missileTarget, transform.right).z;
+                degToAirplane = Vector3.Cross(missileTarget, transform.right).z;
             }
             else
             {
-                oscMag = rotateAmount < 0 ? -oscillateLength : oscillateLength;
+                ResetOscillator();
             }
 
-            rb2D.angularVelocity = (-turnSpeed * rotateAmount);
+            rb2D.angularVelocity = (-turnSpeed * degToAirplane);
             rb2D.velocity = transform.right * flightSpeed;
         }
         else
@@ -97,14 +99,28 @@ public class Missile : MonoBehaviour {
 
     private void OscillateCalc ()
     {
-
-        if (oscDir * oscMag < oscillateLength)
+        if (oscDir * oscMag < oscLength)
         {
-            oscMag += oscDir * oscillateSpeed / 100;
+            oscMag += oscDir * oscSpeed / 100;
         }
         else
         {
             oscDir *= -1;
+        }
+    }
+
+    private void ResetOscillator ()
+    {
+        //oscMag = rotateAmount < 0 ? -oscillateLength : oscillateLength;
+        if (degToAirplane < 0)
+        {
+            oscMag = oscLength;
+            oscDir = -1;
+        }
+        else
+        {
+            oscMag = -oscLength;
+            oscDir = 1;
         }
     }
 
@@ -192,12 +208,13 @@ public class Missile : MonoBehaviour {
 
     public void DestroyMissile ()
     {
-        UpdateArrangement();
+        RemoveFromArrangment();
         Destroy(gameObject);
     }
 
-    private void UpdateArrangement ()
+    private void RemoveFromArrangment ()
     {
+        Debug.Log("RemoveFromArrangement");
         if(--GetComponentInParent<Arrangement>().NumChildren == 0)
         {
             Destroy(transform.parent.gameObject);
