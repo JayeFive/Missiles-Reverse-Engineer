@@ -21,7 +21,7 @@ public class GamePlay : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
+	// MonoBehavior
 	void Start ()
     {
         airplane = FindObjectOfType<Airplane>();
@@ -33,7 +33,6 @@ public class GamePlay : MonoBehaviour {
         airplane.StartCoroutine("StartingTurn");
     }
 	
-	// Update is called once per frame
 	void Update () {
 		
         // TODO move to airplane script
@@ -48,5 +47,14 @@ public class GamePlay : MonoBehaviour {
     public void ShowResetUI ()
     {
         // TODO Show Reset UI Screen
+    }
+
+    // Screen Parameters
+    public Vector2 DetermineScreenLimits()
+    {
+        float x = (Camera.main.orthographicSize * Screen.width / Screen.height);
+        float y = (Camera.main.orthographicSize);
+
+        return new Vector2(x, y);
     }
 }

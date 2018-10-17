@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class OffscreenIndicator : MonoBehaviour {
 
     public GameObject indicatorSprite;
+    private GamePlay gamePlay;
     private float fractionOfIndicatorFromEdge = 0.0f;
     private Airplane airplane;
     private GameObject indicator;
@@ -31,12 +32,14 @@ public partial class OffscreenIndicator : MonoBehaviour {
     // Monobehaviors
     void Start()
     {
+        gamePlay = FindObjectOfType<GamePlay>();
         fractionOfIndicatorFromEdge = FindObjectOfType<DesignOptions>().fractionOfIndicatorFromEdge;
         airplane  = FindObjectOfType<Airplane>();
         indicator = Instantiate(indicatorSprite, transform.position, Quaternion.identity);
         indicator.transform.parent = gameObject.transform;
 
-        screenLimit = DetermineScreenLimits();
+        screenLimit = gamePlay.DetermineScreenLimits();
+        AdjustForSpriteSize();
     }   
 
     void Update()
@@ -58,12 +61,10 @@ public partial class OffscreenIndicator : MonoBehaviour {
 
 
     // Camera methods
-    private Vector2 DetermineScreenLimits ()
+    private void AdjustForSpriteSize ()
     {
-        float x = (Camera.main.orthographicSize * Screen.width / Screen.height) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x * fractionOfIndicatorFromEdge);
-        float y = (Camera.main.orthographicSize) - (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.y * fractionOfIndicatorFromEdge);
-
-        return new Vector2(x, y);
+        screenLimit.x -= (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.x * fractionOfIndicatorFromEdge);
+        screenLimit.y -= (indicatorSprite.GetComponent<SpriteRenderer>().bounds.size.y * fractionOfIndicatorFromEdge);
     }
 
     private bool IsAbove()
