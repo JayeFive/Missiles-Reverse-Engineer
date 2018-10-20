@@ -16,7 +16,7 @@ public class StarBonus : MonoBehaviour {
     {
         if (other.gameObject.tag == "Airplane")
         {
-            gamePlay.StarScore++;
+            gamePlay.Stars++;
 
             GetComponentInParent<Arrangement>().NumChildren--;
             Destroy(gameObject);
