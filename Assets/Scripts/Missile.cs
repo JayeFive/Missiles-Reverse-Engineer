@@ -4,30 +4,37 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour {
 
+    [SerializeField] private int bonusValue = 0;
     [SerializeField] private float flightSpeed;
+    [SerializeField] private float offscreenSpeedMod = 0.0f;
+    [SerializeField] private bool isRepeatableSpeedZone = false;
     [SerializeField] private float turnSpeed;
     [SerializeField] private float lifeSpan;
+    [SerializeField] private bool hasGuidance;
 
     [SerializeField] private float oscPrecision;
     [SerializeField] private float oscLength;
-    [SerializeField] private float oscMaxDeg;   
     [SerializeField] private float oscSpeed;
     private float degToAirplane;
     private float oscMag = 0.0f;
     private int oscDir = 1;
 
+    [SerializeField] private float maxTiltAngle = 0.0f;
+    [SerializeField] private float tiltSpeed = 0.0f;
 
     [SerializeField] private float fadeSpeed = 1.0f;
     [SerializeField] private float sputterSeconds = 0.0f;
     private float fadeSpeedMod = 0.015f;
 
     private Rigidbody2D rb2D;
+    private Transform sprite;
     private GameObject smokeTrail;
     private GameObject explosionController;
     private Airplane airplane;
     private GamePlay gamePlay;
 
-    private bool isActive = true; 
+    private bool isActive = true;
+    private bool hasEnteredSpeedZone = false;
 
     public float FlightSpeed
     {
@@ -47,6 +54,17 @@ public class Missile : MonoBehaviour {
         set { lifeSpan = value; }
     }
 
+    public bool HasEnteredSpeedZone
+    {
+        set { hasEnteredSpeedZone = value; }
+    }
+
+    public bool IsRepeatableSpeedZone
+    {
+        get { return isRepeatableSpeedZone; }
+    }
+
+
 
     // MonoBehavior
     void Start ()
@@ -63,21 +81,9 @@ public class Missile : MonoBehaviour {
     {
         if (isActive)
         {
-            Vector2 missileTarget = ((Vector2)airplane.transform.position - rb2D.position).normalized;
-            degToAirplane = Vector3.Cross(missileTarget, transform.right).z;
+            if (hasEnteredSpeedZone) offscreenSpeedMod = 1.0f; 
 
-            if (Mathf.Abs(degToAirplane) * Mathf.Rad2Deg < oscPrecision)
-            {
-                missileTarget = Oscillate(missileTarget);
-                degToAirplane = Vector3.Cross(missileTarget, transform.right).z;
-            }
-            else
-            {
-                ResetOscillator();
-            }
-
-            rb2D.angularVelocity = (-turnSpeed * degToAirplane);
-            rb2D.velocity = transform.right * flightSpeed;
+            MoveMissile();
         }
         else
         {
@@ -85,11 +91,53 @@ public class Missile : MonoBehaviour {
         }
     }
 
+    // Missile Motion
+    private void MoveMissile ()
+    {
+        if (hasGuidance)
+        {
+            DirectMissile();
+        }
+
+        rb2D.velocity = transform.right * flightSpeed * offscreenSpeedMod;
+    }
+
+    private void DirectMissile ()
+    {
+        Vector2 missileTarget = ((Vector2)airplane.transform.position - rb2D.position).normalized;
+        degToAirplane = Vector3.Cross(missileTarget, transform.right).z * Mathf.Rad2Deg;
+
+        if (Mathf.Abs(degToAirplane) < oscPrecision)
+        {
+            missileTarget = Oscillate(missileTarget);
+            degToAirplane = Vector3.Cross(missileTarget, transform.right).z;
+        }
+        else
+        {
+            ResetOscillator();
+        }
+
+        rb2D.angularVelocity = (-turnSpeed * degToAirplane * Mathf.Deg2Rad);
+
+        TiltMissile();
+    }
+
+    private void TiltMissile()
+    {
+        float tiltAroundZ = rb2D.angularVelocity * (maxTiltAngle / turnSpeed);
+        Vector3 targetTilt = new Vector3(0, 0, tiltAroundZ);
+
+        sprite.transform.localEulerAngles = targetTilt;
+    }
+
 
     // Oscillator
     private Vector2 Oscillate (Vector2 directionToAirplane)
     {
-        OscillateCalc();
+        var distanceToAirplane = (transform.position - airplane.transform.position).magnitude;
+        var oscMax = distanceToAirplane < 4 ? oscLength * distanceToAirplane / 6 : oscLength;
+  
+        OscillateCalc(oscMax);
 
         Vector2 perp = Vector2.Perpendicular(directionToAirplane).normalized;
         var finalVector = (perp * oscMag) + (Vector2)airplane.transform.position;
@@ -97,9 +145,9 @@ public class Missile : MonoBehaviour {
         return (finalVector - rb2D.position).normalized;
     }
 
-    private void OscillateCalc ()
+    private void OscillateCalc (float oscMax)
     {
-        if (oscDir * oscMag < oscLength)
+        if (oscDir * oscMag < oscMax)
         {
             oscMag += oscDir * oscSpeed / 100;
         }
@@ -107,11 +155,12 @@ public class Missile : MonoBehaviour {
         {
             oscDir *= -1;
         }
+
+
     }
 
     private void ResetOscillator ()
     {
-        //oscMag = rotateAmount < 0 ? -oscillateLength : oscillateLength;
         if (degToAirplane < 0)
         {
             oscMag = oscLength;
@@ -131,6 +180,7 @@ public class Missile : MonoBehaviour {
         gamePlay = FindObjectOfType<GamePlay>();
         airplane = FindObjectOfType<Airplane>();
         rb2D = GetComponent<Rigidbody2D>();
+        sprite = transform.GetChild(0);
     }
 
     private void StartMissile ()
@@ -177,15 +227,23 @@ public class Missile : MonoBehaviour {
     //Collisions
     private void OnTriggerEnter2D (Collider2D other)
     {
-        if (other.gameObject.tag == "Missile")
+        var missile = other.GetComponent<Missile>();
+        var airplane = other.GetComponent<Airplane>();
+
+        if (missile == null && airplane == null)
+        {
+            return;
+        }
+
+        if (missile != null && other.GetInstanceID() > GetInstanceID())
         {
             GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
             explosion.GetComponent<ExplosionController>().MissileToMissile();
 
-            RemoveComponents();
-            DestroyMissile();
+            gamePlay.Bonus = bonusValue;
+
         }
-        else if (other.gameObject.tag == "Airplane")
+        else if (airplane != null)
         {
             //explosionController.MissleToAirplane();
 
@@ -193,6 +251,9 @@ public class Missile : MonoBehaviour {
 
             //gamePlay.ShowResetUI();
         }
+
+        RemoveComponents();
+        DestroyMissile();
     }
 
     // Garbage
@@ -214,7 +275,6 @@ public class Missile : MonoBehaviour {
 
     private void RemoveFromArrangment ()
     {
-        Debug.Log("RemoveFromArrangement");
         if(--GetComponentInParent<Arrangement>().NumChildren == 0)
         {
             Destroy(transform.parent.gameObject);
