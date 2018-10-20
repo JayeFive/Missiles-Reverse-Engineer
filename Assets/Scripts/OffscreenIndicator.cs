@@ -29,7 +29,7 @@ public partial class OffscreenIndicator : MonoBehaviour {
     private float airplanePos;
 
 
-    // Monobehaviors
+    // MonoBehavior
     void Start()
     {
         gamePlay = FindObjectOfType<GamePlay>();
