@@ -9,11 +9,11 @@ public static class SpawnLocations
     {
         switch (arrangement.tag)
         {
-            case "StarBonus":
+            case "StarBonusArrangement":
                 return StarBonusLoc(spawnMagnitude);
-            case "PowerUp":
+            case "PowerUpArrangement":
                 return new Vector2(0, 0);
-            case "Missile":
+            case "AttackArrangement":
                 return Camera.main.transform.position;
             default:
                 Debug.Log("arrangement tag not found in SpawnLocations.cs");
