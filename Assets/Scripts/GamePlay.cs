@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using Assets.UIExtensions;
 using System;
 
 public class GamePlay : MonoBehaviour {
 
-    [SerializeField] private float bonusFadeSpeed = 0.0f;
     [SerializeField] private Canvas worldSpaceCanvas;
 
     private Airplane airplane;
@@ -46,18 +44,6 @@ public int Stars
         airplane.StartCoroutine("StartingTurn");
     }
 
-    internal void BonusAnimation(Transform explosion, int bonusValue)
-    {
-        var bonusAnimation = Instantiate(worldSpaceCanvas, explosion);
-        var bonusText = bonusAnimation.GetComponentInChildren<Text>();
-        Color bonusColor = bonusText.color;
-        bonusColor.a = 0;
-        bonusText.color = bonusColor;
-
-        bonusText.text = "+" + bonusValue.ToString();
-        StartCoroutine(ShowBonus(bonusText));
-    }
-
     void Update () {
 		
         // TODO move to airplane script
@@ -70,14 +56,7 @@ public int Stars
 
     // UI Methods
 
-    private IEnumerator ShowBonus(Text text)
-    {
-        StartCoroutine(text.CrossFadeAlphaFixed(1f, bonusFadeSpeed));
-
-        yield return new WaitForSeconds(3f);
-
-        StartCoroutine(text.CrossFadeAlphaFixed(0f, bonusFadeSpeed));
-    }
+    
 
     public void ShowResetUI ()
     {
