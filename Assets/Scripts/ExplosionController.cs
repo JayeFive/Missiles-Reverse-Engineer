@@ -131,7 +131,6 @@ public class ExplosionController : MonoBehaviour
 
         if (gameObject.transform.childCount == 0)
         {
-            Debug.Log("should be destroyed");
             Destroy(gameObject);
         }
 
