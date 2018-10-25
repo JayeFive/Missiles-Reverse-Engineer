@@ -10,7 +10,6 @@ public class WorldSpaceCanvas : MonoBehaviour
     private Text bonusText;
 
     //MonoBehavior
-
     void Awake ()
     {
         bonusText = GetComponentInChildren<Text>();
@@ -27,7 +26,7 @@ public class WorldSpaceCanvas : MonoBehaviour
     public void BonusAnimation (int bonusValue)
     {
         Color bonusColor = bonusText.color;
-        bonusColor.a = 1f;
+        bonusColor.a = 0.01f;
         bonusText.color = bonusColor;
 
         bonusText.text = "+" + bonusValue.ToString();

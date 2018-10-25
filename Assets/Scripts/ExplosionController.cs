@@ -133,7 +133,6 @@ public class ExplosionController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     private Vector3 CircleOffset(float range)
