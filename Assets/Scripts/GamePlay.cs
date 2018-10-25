@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using Assets.UIExtensions;
+using System;
 
 public class GamePlay : MonoBehaviour {
 
     [SerializeField] private float bonusFadeSpeed = 0.0f;
+    [SerializeField] private Canvas worldSpaceCanvas;
 
     private Airplane airplane;
     public TouchJoystick joystick;
     private Text starsText;
-    private Text bonusText;
 
     private int stars = 0;
     private int bonus = 0;
@@ -29,11 +30,7 @@ public int Stars
     public int Bonus
     {
         get { return bonus; }
-        set
-        {
-            bonus += value;
-            if (bonusText != null) StartCoroutine(ShowBonus(value));
-        }
+        set { bonus = value; }
     }
 
     // MonoBehavior
@@ -42,15 +39,26 @@ public int Stars
         airplane = FindObjectOfType<Airplane>();
         joystick = FindObjectOfType<TouchJoystick>();
         starsText = GameObject.Find("StarCounterText").GetComponent<Text>();
-        bonusText = GameObject.Find("BonusText").GetComponent<Text>();
 
 
         // TODO create coroutine utility class to return bool value from this coroutine
         // https://answers.unity.com/questions/24640/how-do-i-return-a-value-from-a-coroutine.html
         airplane.StartCoroutine("StartingTurn");
     }
-	
-	void Update () {
+
+    internal void BonusAnimation(Transform explosion, int bonusValue)
+    {
+        var bonusAnimation = Instantiate(worldSpaceCanvas, explosion);
+        var bonusText = bonusAnimation.GetComponentInChildren<Text>();
+        Color bonusColor = bonusText.color;
+        bonusColor.a = 0;
+        bonusText.color = bonusColor;
+
+        bonusText.text = "+" + bonusValue.ToString();
+        StartCoroutine(ShowBonus(bonusText));
+    }
+
+    void Update () {
 		
         // TODO move to airplane script
         if (airplane.startingTurnComplete)
@@ -62,14 +70,13 @@ public int Stars
 
     // UI Methods
 
-    private IEnumerator ShowBonus(float scoreAddition)
+    private IEnumerator ShowBonus(Text text)
     {
-        bonusText.text = "+" + scoreAddition.ToString();
-        StartCoroutine(bonusText.CrossFadeAlphaFixed(1f, bonusFadeSpeed));
+        StartCoroutine(text.CrossFadeAlphaFixed(1f, bonusFadeSpeed));
 
         yield return new WaitForSeconds(3f);
 
-        StartCoroutine(bonusText.CrossFadeAlphaFixed(0f, bonusFadeSpeed));
+        StartCoroutine(text.CrossFadeAlphaFixed(0f, bonusFadeSpeed));
     }
 
     public void ShowResetUI ()

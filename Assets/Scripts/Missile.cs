@@ -238,9 +238,7 @@ public class Missile : MonoBehaviour {
         if (missile != null && other.GetInstanceID() > GetInstanceID())
         {
             GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
-            explosion.GetComponent<ExplosionController>().MissileToMissile();
-
-            gamePlay.Bonus = bonusValue;
+            explosion.GetComponent<ExplosionController>().MissileToMissile(bonusValue);
 
         }
         else if (airplane != null)

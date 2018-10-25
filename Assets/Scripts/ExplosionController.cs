@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ExplosionController : MonoBehaviour
 {
+    private GamePlay gamePlay;
 
     [SerializeField] GameObject circle;
     [SerializeField] float innerCircleSize;
@@ -21,10 +22,17 @@ public class ExplosionController : MonoBehaviour
     [SerializeField] float cloudDriftSpeed;
     [SerializeField] float cloudDriftSpeedModifier;
 
-    public void MissileToMissile()
+    void Awake ()
+    {
+        gamePlay = FindObjectOfType<GamePlay>();
+    }
+
+    public void MissileToMissile(int bonusValue)
     {
         BeginAnimation(numSmokeCircles, smokeCircleRange, false);
         BeginAnimation(numExplosionCircles, explosionCircleRange, true);
+
+        gamePlay.BonusAnimation(gameObject.transform, bonusValue);
     }
 
     private void BeginAnimation(int numCircles, float range, bool isExplosion)
