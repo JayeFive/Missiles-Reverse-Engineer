@@ -1,7 +1,7 @@
 TODO LIST
 
 1. Missile Physics
-  1. Sine wave oscillations to simulate homing over correction
+  1. Sine wave oscillations to simulate homing over correction (IMPEMENTED)
   2. Final gameplay testing for each missile.
 2. Gameplay
   1. Add new types of missiles
@@ -22,6 +22,7 @@ TODO LIST
      * Make indicators rotate to point offscreen correctly (IMPLEMENTED)
   6. Missle collision with airplane
   7. Scoring
+	 * Missile to missile collisions add bonus points (IMPLEMENTED)
 3. UI
   1. Intro screen
   2. Game over screen and restart functionality

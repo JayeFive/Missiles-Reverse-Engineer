@@ -44,14 +44,9 @@ public int Stars
         airplane.StartCoroutine("StartingTurn");
     }
 
-    void Update () {
-		
-        // TODO move to airplane script
-        if (airplane.startingTurnComplete)
-        {
-            joystick.GetComponent<ETCJoystick>().visible = true;
-        }
-    }
+    // GamePlay
+
+
 
 
     // UI Methods

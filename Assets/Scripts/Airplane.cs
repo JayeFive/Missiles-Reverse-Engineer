@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Airplane : MonoBehaviour {
+public class Airplane : MonoBehaviour
+{
+    private GamePlay gamePlay;
 
     [SerializeField] float flightSpeed;
     [SerializeField] float turnSpeed;
-    public TouchJoystick joystick;
-    public bool startingTurnComplete = false;
+    [SerializeField] TouchJoystick joystick;
+    private bool startingTurnComplete = false;
 
     private float flightDirection;
     private Rigidbody2D rb2D;
@@ -15,6 +17,7 @@ public class Airplane : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        gamePlay = FindObjectOfType<GamePlay>();
         rb2D = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<TouchJoystick>();
 	}
@@ -44,6 +47,7 @@ public class Airplane : MonoBehaviour {
             yield return null;
         }
 
+        joystick.GetComponent<ETCJoystick>().visible = true;
         startingTurnComplete = true;
     }
 

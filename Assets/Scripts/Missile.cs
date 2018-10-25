@@ -239,13 +239,11 @@ public class Missile : MonoBehaviour {
         {
             GameObject explosion = Instantiate(explosionController, gameObject.transform.position, Quaternion.identity);
             explosion.GetComponent<ExplosionController>().MissileToMissile(bonusValue);
-
+            gamePlay.Bonus += bonusValue;
         }
         else if (airplane != null)
         {
-            //explosionController.MissleToAirplane();
-
-            // TODO add points to gamePlay total points
+            Debug.Log("Airplane Hit! Bonus points: " + gamePlay.Bonus);
 
             //gamePlay.ShowResetUI();
         }
