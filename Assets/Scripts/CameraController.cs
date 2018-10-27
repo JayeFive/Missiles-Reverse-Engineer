@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
-    public GameObject airplane;
+public class CameraController : MonoBehaviour
+{
+    private Airplane airplane;
     private Vector3 offset;
 
-    public GameObject testMissle;
 
-	// Use this for initialization
-	void Start ()
+    // MonoBehavior
+    void Start()
     {
-        offset = transform.position - airplane.transform.position; // DEV TODO uncomment
-        //offset = transform.position - testMissle.transform.position;
+        airplane = FindObjectOfType<Airplane>();
+        airplane = GameManager.instance.GamePlay.Get
+
+        offset = transform.position - airplane.transform.position;
     }
-	
-	// Update is called once per frame
-	void LateUpdate ()
+
+    void LateUpdate()
     {
-        transform.position = airplane.transform.position + offset;  // DEV TODO uncomment
-        //transform.position = testMissle.transform.position + offset;
+        transform.position = airplane.transform.position + offset;
     }
 }
