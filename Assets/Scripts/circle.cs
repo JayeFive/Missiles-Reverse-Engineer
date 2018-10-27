@@ -7,7 +7,7 @@ public class circle : MonoBehaviour {
     public bool isExplosion = false;
     public Vector3 cloudDrift;
 
-    private void Update ()
+    private void FixedUpdate ()
     {
         transform.position += cloudDrift;
     }
