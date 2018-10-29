@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SmokeTrail : MonoBehaviour {
 
-    [SerializeField] public int burstCount;
-    [SerializeField] float timeBetweenBursts;
+    [SerializeField] public int burstCount = 0;
+    [SerializeField] float timeBetweenBursts = 0f;
 
     private ParticleSystem smokeParticles;
     private ParticleSystem.EmissionModule emissionModule;
