@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 using System;
 
@@ -9,8 +8,6 @@ public class GamePlay : MonoBehaviour {
     [SerializeField] private Canvas worldSpaceCanvas;
 
     private Airplane airplane;
-    public TouchJoystick joystick;
-    private Text starsText;
 
     private int stars = 0;
     private int bonus = 0;
@@ -21,7 +18,7 @@ public int Stars
         set
         {
             stars = value;
-            if (starsText != null) starsText.GetComponent<Text>().text = stars.ToString();
+            GameManager.Instance.UpdateStarScore(stars);
         }
     }
 
@@ -35,23 +32,13 @@ public int Stars
     void Start ()
     {
         airplane = FindObjectOfType<Airplane>();
-        joystick = FindObjectOfType<TouchJoystick>();
-        starsText = GameObject.Find("StarCounterText").GetComponent<Text>();
-
 
         // TODO create coroutine utility class to return bool value from this coroutine
         // https://answers.unity.com/questions/24640/how-do-i-return-a-value-from-a-coroutine.html
         airplane.StartCoroutine("StartingTurn");
     }
 
-    // GamePlay
 
-
-
-
-    // UI Methods
-
-    
 
     public void ShowResetUI ()
     {
