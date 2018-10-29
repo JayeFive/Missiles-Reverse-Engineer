@@ -6,24 +6,27 @@ public class Airplane : MonoBehaviour
 {
     private GamePlay gamePlay;
 
-    [SerializeField] float flightSpeed;
-    [SerializeField] float turnSpeed;
+    [SerializeField] float flightSpeed = 0f;
+    [SerializeField] float turnSpeed = 0f;
     [SerializeField] TouchJoystick joystick;
     private bool startingTurnComplete = false;
 
     private float flightDirection;
     private Rigidbody2D rb2D;
 
-	// Use this for initialization
-	void Start ()
+
+    // MonoBehavior
+	void Start()
     {
         gamePlay = FindObjectOfType<GamePlay>();
         rb2D = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<TouchJoystick>();
+
+        GameManager.Instance.Airplane = this;
 	}
 	
-	// Update is called once per frame
-	void Update ()
+	// MonoBehavior
+	void Update()
     {
         rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, flightSpeed);
 
@@ -39,7 +42,9 @@ public class Airplane : MonoBehaviour
         }
     }
 
-    public IEnumerator StartingTurn ()
+
+    // Airpane control
+    public IEnumerator StartingTurn()
     {
         for (float flightDirection = 90; flightDirection <= 270; flightDirection += Time.deltaTime * turnSpeed)
         {
@@ -47,19 +52,18 @@ public class Airplane : MonoBehaviour
             yield return null;
         }
 
-        joystick.GetComponent<ETCJoystick>().visible = true;
+        if (joystick != null)
+        {
+            joystick.GetComponent<ETCJoystick>().visible = true;
+        }
+        else Debug.Log("Joystick not found!");
+
         startingTurnComplete = true;
     }
 
-    void TurnAirplane (float flightDirection)
+    void TurnAirplane(float flightDirection)
     {
         Quaternion qt = Quaternion.AngleAxis(flightDirection, Vector3.forward);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, Time.deltaTime * turnSpeed);
-    }
-
-    //Collisions
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
     }
 }
