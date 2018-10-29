@@ -5,22 +5,21 @@ using UnityEngine;
 public class Missile : MonoBehaviour {
 
     [SerializeField] private int bonusValue = 0;
-    [SerializeField] private float flightSpeed;
-    [SerializeField] private float offscreenSpeedMod = 0.0f;
+    [SerializeField] private float flightSpeed = 0f;
+    [SerializeField] private float offscreenSpeedMod = 0f;
     [SerializeField] private bool isRepeatableSpeedZone = false;
-    [SerializeField] private float turnSpeed;
-    [SerializeField] private float lifeSpan;
-    [SerializeField] private bool hasGuidance;
+    [SerializeField] private float turnSpeed = 0f;
+    [SerializeField] private float lifeSpan = 0f;
+    [SerializeField] private bool hasGuidance = true;
 
-    [SerializeField] private float oscPrecision;
-    [SerializeField] private float oscLength;
-    [SerializeField] private float oscSpeed;
+    [SerializeField] private float oscPrecision = 0f;
+    [SerializeField] private float oscLength = 0f;
+    [SerializeField] private float oscSpeed = 0f;
     private float degToAirplane;
-    private float oscMag = 0.0f;
+    private float oscMag;
     private int oscDir = 1;
 
     [SerializeField] private float maxTiltAngle = 0.0f;
-    [SerializeField] private float tiltSpeed = 0.0f;
 
     [SerializeField] private float fadeSpeed = 1.0f;
     [SerializeField] private float sputterSeconds = 0.0f;
