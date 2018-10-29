@@ -5,22 +5,24 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
 
-    public float currentTime;
-    public Text timerText;
+    private float _currentTime;
     private float startTime;
 
-	// Use this for initialization
-	void Start () {
+    public float CurrentTime { get { return _currentTime; } }
+
+	// MonoBehavior
+	void Start ()
+    {
         startTime = Time.time;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        currentTime = Time.time - startTime;
+	void Update ()
+    {
+        _currentTime = Time.time - startTime;
 
-        string minutes = ((int)currentTime / 60).ToString();
-        string seconds = ((int)currentTime % 60).ToString("D2");
+        string minutes = ((int)_currentTime / 60).ToString();
+        string seconds = ((int)_currentTime % 60).ToString("D2");
 
-        timerText.text = minutes + ":" + seconds;
+        GetComponent<Text>().text = minutes + ":" + seconds;
 	}
 }
