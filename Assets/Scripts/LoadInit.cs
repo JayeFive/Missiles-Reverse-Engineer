@@ -8,7 +8,7 @@ public class LoadInit : MonoBehaviour
     //MonoBehavior
     void Awake()
     {
-        if (GameManager.instance == null)
+        if (GameManager.Instance == null)
         {
             Instantiate(gameManager);
         }
