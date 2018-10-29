@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class ExplosionController : MonoBehaviour
 {
-    [SerializeField] WorldSpaceCanvas bonusCanvas;
-    [SerializeField] GameObject circle;
-    [SerializeField] float innerCircleSize;
-    [SerializeField] float outerCircleSize;
-    [SerializeField] float cloudGrowSpeed;
-    [SerializeField] float cloudFadeSpeed;
-    [SerializeField] float cloudDissipateSpeed;
-    [SerializeField] float explosionFadeSpeed;
-    [SerializeField] float explosionLifetime;
-    [SerializeField] int numSmokeCircles;
-    [SerializeField] int numExplosionCircles;
-    [SerializeField] float smokeCircleRange;
-    [SerializeField] float explosionCircleRange;
-    [SerializeField] float cloudDriftSpeed;
-    [SerializeField] float cloudDriftSpeedModifier;
+    [SerializeField] WorldSpaceCanvas bonusCanvas = null;
+    [SerializeField] GameObject circle = null;
+    [SerializeField] float innerCircleSize = 0f;
+    [SerializeField] float outerCircleSize = 0f;
+    [SerializeField] float cloudGrowSpeed = 0f;
+    [SerializeField] float cloudFadeSpeed = 0f;
+    [SerializeField] float cloudDissipateSpeed = 0f;
+    [SerializeField] float explosionFadeSpeed = 0f;
+    [SerializeField] float explosionLifetime = 0f;
+    [SerializeField] int numSmokeCircles = 0;
+    [SerializeField] int numExplosionCircles = 0;
+    [SerializeField] float smokeCircleRange = 0f;
+    [SerializeField] float explosionCircleRange = 0f;
+    [SerializeField] float cloudDriftSpeed = 0f;
+    [SerializeField] float cloudDriftSpeedModifier = 0f;
 
     public void MissileToMissile(int bonusValue)
     {
