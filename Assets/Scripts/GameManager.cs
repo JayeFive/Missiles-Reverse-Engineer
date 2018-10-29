@@ -4,43 +4,87 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public static GameManager instance = null;
+    // Game Loop
+    private string[] initialScenesToLoad = { "UI", "WorldScene", "GamePlay" };
+
+    // Persistence 
     public int playerScore = 0;
 
-    public Scene UI;
-    public Scene GamePlay;
+    // UI hooks
+
+
+
+    // GameObject hooks
+    private Airplane airplane;
+    public Airplane Airplane { get; set; }
+
+    private TouchJoystick _joystick = null;
+
 
     //MonoBehavior
     void Awake()
     {
-        if (instance == null)
+        foreach(string sceneName in initialScenesToLoad)
         {
-            instance = this;
+            RestartScene(sceneName);
         }
-        else if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
-
-        RestartWorldScene();
-        LoadHud();
-        LoadGamePlay();
-
+        
+        StartCoroutine(SetPrimaryScene("WorldScene"));
     }
 
 
-
-    // Scene Management 
-    private void RestartWorldScene()
+    // Scene Management
+    private void RestartScene(string sceneName)
     {
-        LoadSceneAdditively("WorldScene");
+        var _scene = SceneManager.GetSceneByName(sceneName);
+
+        if (_scene.isLoaded == true)
+        {
+            SceneManager.UnloadSceneAsync(_scene);
+            StartCoroutine(ReloadSceneAfterUnloading(sceneName));
+        }
+        else
+        {
+            LoadSceneAdditively(sceneName);
+        }
     }
+
+    private IEnumerator ReloadSceneAfterUnloading (string sceneName)
+    {
+        if (SceneManager.GetSceneByName(sceneName).isLoaded == true)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        else
+        {
+            LoadSceneAdditively(sceneName);
+        }
+    }
+
+    private void LoadUI()
+    {
+        LoadSceneAdditively("UI");
+    }   
 
     private static void LoadSceneAdditively(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+    }
+
+    private IEnumerator SetPrimaryScene(string sceneName)
+    {
+        yield return new WaitForEndOfFrame();
+
+        var scene = SceneManager.GetSceneByName(sceneName);
+
+        if (scene.isLoaded)
+        {
+            SceneManager.SetActiveScene(scene);
+        }
+        else
+        {
+            StartCoroutine(SetPrimaryScene(sceneName));
+        }
     }
 
     
@@ -52,14 +96,12 @@ public class GameManager : Singleton<GameManager>
 
     private void LoadHud()
     {
-        LoadSceneAdditively("UI");
-        UI = SceneManager.GetSceneByName("UI");
+        
     }
 
     private void LoadGamePlay()
     {
         LoadSceneAdditively("GamePlay");
-        GamePlay = SceneManager.GetSceneByName("GamePlay");
     }
 
     private void LoadTouchControls()
@@ -73,6 +115,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     private void ToggleGameOverUI()
+    {
+
+    }
+
+    public void UpdateStarScore(int value)
     {
 
     }
