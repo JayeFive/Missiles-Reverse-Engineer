@@ -264,15 +264,7 @@ public class Missile : MonoBehaviour {
 
     public void DestroyMissile ()
     {
-        RemoveFromArrangment();
+        GetComponentInParent<Arrangement>().NumChildren--;
         Destroy(gameObject);
-    }
-
-    private void RemoveFromArrangment ()
-    {
-        if(--GetComponentInParent<Arrangement>().NumChildren == 0)
-        {
-            Destroy(transform.parent.gameObject);
-        }
     }
 }

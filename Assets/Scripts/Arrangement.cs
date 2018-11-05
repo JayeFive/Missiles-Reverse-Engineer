@@ -14,7 +14,10 @@ public class Arrangement : MonoBehaviour {
     public int NumChildren
     {
         get { return numChildren; }
-        set { numChildren = value; }
+        set {
+                numChildren = value;
+                if (numChildren == 0) Destroy(gameObject);
+            }
     }
 
     public int SpawnWeight
