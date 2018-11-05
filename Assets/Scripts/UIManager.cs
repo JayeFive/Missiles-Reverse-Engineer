@@ -9,6 +9,15 @@ public class UIManager : MonoBehaviour
     public Canvas HomeScreen;
     public Canvas GameOverScreen;
 
+
+    // MonoBehavior
+    void Awake()
+    {
+        GameManager.Instance.UIManager = this;
+    }
+
+
+    // UI Methods
     public void DisplayStarScore(int value)
     {
         var starScore = HUD.transform.Find("StarScoreText");

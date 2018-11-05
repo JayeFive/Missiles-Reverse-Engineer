@@ -15,8 +15,16 @@ public class GameManager : Singleton<GameManager>
 
 
     // GameObject hooks
-    private Airplane airplane;
+    private Airplane _airplane;
     public Airplane Airplane { get; set; }
+
+    private UIManager _UIManager;
+    public UIManager UIManager
+    {
+        get { return _UIManager; }
+        set { _UIManager = value; }
+    }
+
 
     private TouchJoystick _joystick = null;
 
@@ -121,6 +129,9 @@ public class GameManager : Singleton<GameManager>
 
     public void UpdateStarScore(int value)
     {
-
+        if (_UIManager != null)
+        {
+            _UIManager.DisplayStarScore(value);
+        }
     }
 }
