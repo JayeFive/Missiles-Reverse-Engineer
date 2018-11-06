@@ -6,23 +6,31 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour {
 
     private float _currentTime;
-    private float startTime;
+    private float _startTime;
+    private bool _timerStarted = false;
 
     public float CurrentTime { get { return _currentTime; } }
 
+
 	// MonoBehavior
-	void Start ()
-    {
-        startTime = Time.time;
-	}
-	
 	void Update ()
     {
-        _currentTime = Time.time - startTime;
+        if (_timerStarted)
+        {
+            _currentTime = Time.time - _startTime;
 
-        string minutes = ((int)_currentTime / 60).ToString();
-        string seconds = ((int)_currentTime % 60).ToString("D2");
+            string minutes = ((int)_currentTime / 60).ToString();
+            string seconds = ((int)_currentTime % 60).ToString("D2");
 
-        GetComponent<Text>().text = minutes + ":" + seconds;
+            GetComponent<Text>().text = minutes + ":" + seconds;
+        }
 	}
+
+
+    // Timer methods
+    public void StartTimer()
+    {
+        _startTime = Time.time;
+        _timerStarted = true;
+    }
 }
