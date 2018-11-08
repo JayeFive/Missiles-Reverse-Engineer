@@ -5,16 +5,14 @@ using System;
 
 public class GamePlay : MonoBehaviour {
 
-    [SerializeField] private Canvas worldSpaceCanvas;
-
-    private Airplane airplane;
-
     private int stars = 0;
     private int bonus = 0;
+    private bool hasShield = false;
+    private bool hasSpeedBonus = false;
 
 public int Stars
     {
-        get { return stars; }
+        get => stars;
         set
         {
             stars = value;
@@ -22,28 +20,18 @@ public int Stars
         }
     }
 
-    public int Bonus
-    {
-        get { return bonus; }
-        set { bonus = value; }
-    }
+    public int Bonus { get => bonus; set => bonus = value; }
+    public bool HasShield { get => hasShield; set => hasShield = value; }
+    public bool HasSpeedBonus { get => hasSpeedBonus; set => hasSpeedBonus = value; }
+
 
     // MonoBehavior
-    void Start ()
+    void Start()
     {
-        airplane = FindObjectOfType<Airplane>();
-
-        // TODO create coroutine utility class to return bool value from this coroutine
-        // https://answers.unity.com/questions/24640/how-do-i-return-a-value-from-a-coroutine.html
-        airplane.StartCoroutine("StartingTurn");
+        var camera = FindObjectOfType<Camera>();
+        camera.transform.position = Camera.main.transform.position;
     }
 
-
-
-    public void ShowResetUI ()
-    {
-        // TODO Show Reset UI Screen
-    }
 
     // Screen Parameters
     public Vector2 DetermineScreenLimits()

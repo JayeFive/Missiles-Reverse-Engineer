@@ -9,22 +9,27 @@ public class Airplane : MonoBehaviour
     [SerializeField] float flightSpeed = 0f;
     [SerializeField] float turnSpeed = 0f;
     [SerializeField] TouchJoystick joystick;
-    private bool startingTurnComplete = false;
+    private bool _startingTurnComplete = false;
 
     private float flightDirection;
     private Rigidbody2D rb2D;
 
 
     // MonoBehavior
+    void Awake()
+    {
+        GameManager.Instance.Airplane = this;
+    }
+
+
 	void Start()
     {
         gamePlay = FindObjectOfType<GamePlay>();
         rb2D = GetComponent<Rigidbody2D>();
         joystick = FindObjectOfType<TouchJoystick>();
-
-        GameManager.Instance.Airplane = this;
 	}
 	
+
 	// MonoBehavior
 	void Update()
     {
@@ -32,7 +37,7 @@ public class Airplane : MonoBehaviour
 
         rb2D.AddForce(transform.right * flightSpeed);
 
-        if (startingTurnComplete)
+        if (_startingTurnComplete)
         {
             if (Input.GetMouseButton(0))
             {
@@ -58,7 +63,8 @@ public class Airplane : MonoBehaviour
         }
         else Debug.Log("Joystick not found!");
 
-        startingTurnComplete = true;
+        _startingTurnComplete = true;
+        GameManager.Instance.PlayerStart();
     }
 
     void TurnAirplane(float flightDirection)
