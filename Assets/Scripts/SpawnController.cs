@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class SceneSpawnController : MonoBehaviour
+public class SpawnController : MonoBehaviour
 {
     // Editor fields
     [SerializeField][ReadOnly] private string type = "";
